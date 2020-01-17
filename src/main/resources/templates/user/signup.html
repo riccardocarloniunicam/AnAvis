@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign up</title>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal" role="form" method="POST" th:action="@{/signup}" th:object="${user}">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h2>Registrati</h2>
+                <hr>
+            </div>
+        </div>
+        <!----FORM---->
+        <!----nome---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="nome">Nome</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                        <input type="text" th:field="*{nome}" class="form-control" id="nome"
+                               placeholder="Nome" required autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!----Cognome---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="cognome">Last Name</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                        <input type="text" th:field="*{cognome}" class="form-control" id="cognome"
+                               placeholder="Cognome" required autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!----Email---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="email">Email</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-envelope" style="font-size:15px"></i></div>
+                        <input type="text" th:field="*{email}" class="form-control" id="email"
+                               placeholder="username@anavis.com" required autofocus>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                         </span>
+                </div>
+            </div>
+        </div>
+
+        <!----Password---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="password">Password</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                        <input type="password" th:field="*{password}" class="form-control" id="password"
+                               placeholder="Password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                         </span>
+                </div>
+            </div>
+        </div>
+        <!----Codice Fiscale---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="email">Codice Fiscale</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+                        <input maxlength="15"  type="text" th:field="*{cf}" class="form-control" id="cf"
+                               placeholder="Codice Fiscale" required autofocus>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('cf')}" th:errors="*{cf}">
+                         </span>
+                </div>
+            </div>
+        </div>
+
+        <!----Indirizzo---->
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="email">Indirizzo</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+                            <input type="text" th:field="*{indirizzo}" class="form-control" id="indirizzo"
+                                   placeholder="Indirizzo" required autofocus>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}">
+                         </span>
+                    </div>
+                </div>
+            </div>
+
+                <!----Città---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="citta">Città</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+                        <input type="text" th:field="*{citta}" class="form-control" id="citta"
+                               placeholder="citta" required autofocus>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}">
+                         </span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="provincia">Provincia</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+
+
+
+
+                        <select class="custom-select" id="provincia" name="locality"  th:field="*{provincia}">
+
+                        </select>
+                        <script th:inline="javascript">
+
+                            let dropdown = $('#provincia');
+
+                            dropdown.empty();
+
+                            dropdown.append('<option selected="true" disabled>Choose Stato/Provincia</option>');
+                            dropdown.prop('selectedIndex', 0);
+
+                            const url = 'https://gist.githubusercontent.com/stockmind/8bcbbf9ac41bc196401b96084ec8c5d3/raw/2edda5cd32eb2b99d3d9b45413bc8b1135564260/province-italia.json';
+
+                            // Populate dropdown with list of provinces
+                            $.getJSON(url, function (data) {
+                                $.each(data, function (key, entry) {
+                                    dropdown.append($('<option></option>').attr('value', entry.sigla).text(entry.nome));
+                                })
+                                $( "#btn" ).submit(function( event ) {
+                                    if ($("#provincia ")[0].selectedIndex <= 0) {
+                                        alert("Seleziona una provincia");
+                                    }
+                                });
+                            });
+
+                        </script>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}">
+                         </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!----Cap---->
+            <div class="row">
+                <div class="col-md-3 field-label-responsive">
+                    <label for="email">CAP</label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+                            <input type="text" th:field="*{cap}" class="form-control" id="cap"
+                                   placeholder="CAP" required autofocus>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}">
+                         </span>
+                    </div>
+                </div>
+            </div>
+
+
+        <!----Telefono---->
+     <div class="row">
+         <div class="col-md-3 field-label-responsive">
+             <label for="email">Telefono</label>
+         </div>
+         <div class="col-md-6">
+             <div class="form-group">
+                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+                     <input type="text" th:field="*{telefono}" class="form-control" id="telefono"
+                            placeholder="Telefono" required autofocus>
+                 </div>
+             </div>
+         </div>
+         <div class="col-md-3">
+             <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">
+                         </span>
+             </div>
+         </div>
+     </div>
+
+        <!----Tipo Documento---->
+
+
+
+
+        <!----NumeroDocumento---->
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-----------
+
+            <select th:field="*{citta}">
+                <option th:value="'RM'" th:text="Roma"></option>
+                <option th:value="'RI'" th:text="Rimini"></option>
+            </select>
+
+            --->
+
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="provincia">Tipo di documento</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+
+
+
+                        <select class="custom-select" th:field="*{tipo_documento}">
+                            <option th:value="'docid'" th:text="DocumentoID"></option>
+                            <option th:value="'patente'" th:text="Patente"></option>
+                            <option th:value="'passaporto'" th:text="Passaporto"></option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('tipo_documento')}" th:errors="*{tipo_documento}">
+                         </span>
+            </div>
+        </div>
+
+
+        <!----NumeroDoc---->
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="email">Numero Documento</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+
+
+                        <input id="ndoc" class="form-control"  th:field="*{numerodoc}" placeholder="Numero Documento" onkeypress="return isNumberKey(event)"
+                             maxlength="11"  required autofocus type="text" name="txtChar">
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('numerodoc')}" th:errors="*{numerodoc}" >
+                         </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-3 field-label-responsive">
+                <label for="grupposanguinio">Gruppo Sanguinio</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-address-card" style="font-size:15px"></i></div>
+
+
+
+                        <select class="custom-select" th:field="*{grupposanguinio}">
+                            <option th:value="'0rh-'" >0 Rh-</option>
+                            <option th:value="'0rh+'" >0 Rh+</option>
+                            <option th:value="'Arh-'" >A Rh-</option>
+                            <option th:value="'Arh+'" >th:text="A Rh+</option>
+                            <option th:value="'Brh-'" >B Rh-</option>
+                            <option th:value="'Brh+'" >B Rh+</option>
+                            <option th:value="'ABrh-'" >AB Rh-</option>
+                            <option th:value="'ABrh+'" >AB Rh+</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <button type="submit" id="btn" class="btn btn-success"><i class="fa fa-user-plus"></i> Register</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
