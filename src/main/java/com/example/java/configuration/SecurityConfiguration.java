@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -16,6 +17,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.sql.DriverManager;
 
+@Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 
@@ -45,7 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/home/**").hasAnyAuthority("ADMIN","USER").anyRequest()
+                .antMatchers("/home/**").hasAuthority("USER")
+                .anyRequest()
                 .authenticated().and().csrf().disable()
                 .formLogin().loginPage("/login")
                 .failureUrl("/login?error=true")
@@ -55,11 +59,35 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                .and().rememberMe()
+                .and().rememberMe().rememberMeParameter("my-remember-me")
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(60*60)
                 .and().exceptionHandling().accessDeniedPage("/access_denied");
+        /*
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/signup").permitAll()
+                .antMatchers("home/**").hasAnyAuthority("USER")
+               // .antMatchers("/dottore").hasAuthority("DOTTORE")
+                .anyRequest()
+                .authenticated().and().csrf().disable()
+                .formLogin().loginPage("/login")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/home/home")
+                .usernameParameter("email").passwordParameter("password")
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").deleteCookies()
+                .and().rememberMe().rememberMeParameter("my-remember-me")    //Token parameter necessary
+                .tokenRepository(persistentTokenRepository())//Non Funziona.
+                .tokenValiditySeconds(60*60)
+                .and().exceptionHandling().accessDeniedPage("/access_denied");
+
+
+         */
     }
+
 
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();

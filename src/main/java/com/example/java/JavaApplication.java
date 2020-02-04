@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class JavaApplication {
 
+
 	public static void main(String[] args) throws InterruptedException {
 		SpringApplication.run(JavaApplication.class, args);
 	}

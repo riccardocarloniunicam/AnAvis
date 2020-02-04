@@ -2,10 +2,10 @@ package com.example.java.repository;
 
 
 
-import com.example.java.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.java.model.Role;
-import org.springframework.stereotype.Repository;
+        import com.example.java.model.User;
+        import org.springframework.data.jpa.repository.JpaRepository;
+        import com.example.java.model.Role;
+        import org.springframework.stereotype.Repository;
 
 
 @Repository("roleRepository")

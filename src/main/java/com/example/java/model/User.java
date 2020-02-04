@@ -215,4 +215,8 @@ public class User {
     public void setEmergenza(int emergenza) {
         this.emergenza = emergenza;
     }
+
+
+
+
 }

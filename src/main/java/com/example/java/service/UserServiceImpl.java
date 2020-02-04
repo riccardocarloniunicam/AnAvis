@@ -9,8 +9,8 @@ import com.example.java.model.Role;
 import com.example.java.model.User;
 import com.example.java.repository.RoleRepository;
 import com.example.java.repository.UserRepository;
-import java.util.Arrays;
-import java.util.HashSet;
+
+import java.util.*;
 
 
 import java.util.Arrays;
@@ -35,7 +35,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-
+    @Override
+    public Optional<User> findUserById(Long id) {
+        return  userRepository.findById(id);
+    }
 
     @Override
     public void saveUser(User user) {
@@ -49,5 +52,20 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-}
 
+    public List<User> listAll() {
+        return userRepository.findAll();
+    }
+
+    public User get(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
+
+
+
+}
