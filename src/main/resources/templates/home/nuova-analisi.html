@@ -82,7 +82,18 @@
 
                                 <div class="clearfix"></div>
                                 <hr style="margin:5px 0 5px 0;">
-                                <form class="form-horizontal" role="form" method="POST" th:action="@{/home/nuova-analisi}" th:object="${prenotazione}">
+                                <form class="form-horizontal" role="form" method="POST" th:action="@{/home/nuova-analisi}" th:object="${prenotazioni}">
+
+
+                                        <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('orario')}" th:errors="*{orario}">
+                         </span>
+                                        </div>
+
+
+
+                                    <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+                                    </div>
                                 <select style="display: none" th:name="cognome" th:field="*{user_id}">
                                     <option th:each="user :${user}" th:value="${user.id}" th:text="${user.id}">
                                     </option>
@@ -136,30 +147,49 @@
                                     <option value="19:30">19:30</option>
 
                                 </select>
+
                             </div>
 
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
+
 
                                 <div class="col-sm-5 col-xs-6 tital " >Data:</div><div class="col-sm-7">
 
+                                    <script th:inline="javascript">
+                                        // Use datepicker on the date inputs
+                                        $("input[type=date]").datepicker({
+                                            dateFormat: 'yy-mm-dd',
+                                            onSelect: function(dateText, inst) {
+                                                $(inst).val(dateText);
 
+                                            }
+                                        });
 
-                                                            <input th:field="*{data}" th:name="data" class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+                                        // Code below to avoid the classic date-picker
+                                        $("input[type=date]").on('click', function() {
+                                            return false;
+                                        });
 
+                                    </script>
 
+                                    <input th:field="*{data}" id="data" th:name="data" type="date">
                                 </div>
+                                    <div class="col-md-3">
+                                        <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('data')}" th:errors="*{data}">
+                         </span>
+                                        </div>
+                                    </div>
 
-                                <button type="submit" id="btn" class="btn btn-success"><i class="fa fa-user-plus"></i> Prenota</button>
-                                </form>
 
-                                </span></div>
+                       </div>
 
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
 
+                            <button style="margin-left: 20px;" type="submit" id="btn" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Prenota</button>
+                            </form>
 
 
                                 <div class="clearfix"></div>
@@ -208,9 +238,11 @@
 
 
 
-
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
 </body>
 </html>

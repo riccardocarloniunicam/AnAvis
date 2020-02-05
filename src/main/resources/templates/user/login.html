@@ -281,19 +281,20 @@
         <!-- Tabs Titles -->
 
         <!-- Icon -->
-        <div class="fadeIn first">
-            <img src="https://image.flaticon.com/icons/png/512/61/61045.png" id="icon" alt="User Icon" />
-        </div>
         <div class="alert alert-danger" role="alert" th:if="${param.error}">
             The email or password is incorrect!
         </div>
+        <div  class="fadeIn first">
+            <img style="margin-left: 125px; padding-top: 20px;" src="https://www.avis.it/wp-content/themes/scintille-avis2016/images/logo_home_2x.png" id="icon" alt="User Icon" />
+        </div>
+
         <!-- Login Form -->
         <form th:action="@{/login}" method="post" >
             <input type="text" id="login" class="fadeIn second" name="email" placeholder="login">
             <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
             <div class="form-check" id="rememberme-group">
                 <input type="checkbox" class="form-check-input" name="my-remember-me" id="remember-me" />
-                <label class="form-check-label" for="remember-me" style="color:black;">Recordami</label>
+                <label class="form-check-label" for="remember-me" style="color:black;">Ricordami</label>
             </div>
             <input type="submit" class="fadeIn fourth" value="Log In">
 
@@ -301,7 +302,7 @@
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
+            <a class="underlineHover" href="#">Password Dimenticata?</a>
         </div>
 
     </div>

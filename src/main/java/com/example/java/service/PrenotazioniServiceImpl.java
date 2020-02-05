@@ -24,7 +24,12 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
 
     @Override
     public void savePrenotazione(Prenotazioni prenotazioni) {
-        prenotazioni.setUser_id(39);
+        prenotazioni.setStato("Prenotata");
         prenotazioniRepository.save(prenotazioni);
+    }
+
+    @Override
+    public List<Prenotazioni> findByorarioedata(String data, String orario) {
+        return prenotazioniRepository.findByOrarioAndData(data,orario);
     }
 }

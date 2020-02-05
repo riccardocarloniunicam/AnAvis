@@ -9,7 +9,7 @@ public class Prenotazioni {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "nome")
     private  String nome;
@@ -23,6 +23,9 @@ public class Prenotazioni {
     @Column(name = "orario")
     private String orario;
 
+    @Column(name = "stato")
+    private String stato;
+
 
     @Column(name = "sede_id")
     private int sede_id;
@@ -30,12 +33,19 @@ public class Prenotazioni {
     @Column(name = "user_id")
     private int user_id;
 
+    public String getStato() {
+        return stato;
+    }
 
-    public Long getId() {
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

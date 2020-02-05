@@ -59,7 +59,6 @@ private PrenotazioniService prenotazioniService;
         User user = new User();
         model.addObject("user", user);
         model.setViewName("user/signup");
-
         return model;
     }
 
@@ -70,7 +69,6 @@ private PrenotazioniService prenotazioniService;
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
-
         if(userExists != null) {
             bindingResult.rejectValue("email", "error.user", "This email already exists!");
         }
@@ -103,7 +101,6 @@ private PrenotazioniService prenotazioniService;
     public ModelAndView viewProfile(){
         ModelAndView model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         model.addObject("user",user);
         model.setViewName("home/profile");
@@ -125,7 +122,7 @@ private PrenotazioniService prenotazioniService;
         model.addObject("user",user);
         model.addObject("sede",sede);
         //
-        model.addObject("prenotazione", prenotazione);
+        model.addObject("prenotazioni", prenotazione);
         model.setViewName("home/nuova-analisi");
 
         return model;
@@ -134,56 +131,25 @@ private PrenotazioniService prenotazioniService;
     @RequestMapping(value ={"/home/nuova-analisi"} , method = RequestMethod.POST)
     public ModelAndView confermaPrenotazione(@Valid Prenotazioni prenotazioni,BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-
+        List<Prenotazioni> pexist = prenotazioniService.findByorarioedata(prenotazioni.getData(),prenotazioni.getOrario());
+        for (int i = 0; i<pexist.size();i++){
+            System.out.println(pexist.get(i).getNome());
+            if (pexist.get(i).getData().equals(prenotazioni.getData()) && pexist.get(i).getOrario().equals(prenotazioni.getOrario())){
+                bindingResult.rejectValue("orario", "error.prenotazioni", "Orario e data per l'appuntamento sono occupato! Scegli un altra ora");
+            }
+        }
+        if(bindingResult.hasErrors()) {
+            model.setViewName("home/nuova-analisi");
+        }else {
             prenotazioniService.savePrenotazione(prenotazioni);
-            model.addObject("prenotazione", new Prenotazioni());
+            model.addObject("prenotazioni", new Prenotazioni());
+            model.addObject("msg", "Prenotazione Effettuata con Successo!");
             model.setViewName("home/nuova-analisi");
             System.out.println("Prenotazione Effettuata con Successo");
 
-        return  model;
-    }
-
-
-
-
-
-
-    /*
-//NUOVA ANALISI GET
-    @RequestMapping(value= {"/home/nuova-analisi"}, method=RequestMethod.GET)
-    public String nuovaAnalsi(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        List<Sede> sede = sedeService.listAll();
-    //mando attributi per thymeleaf
-        model.addAttribute("sede",sede);
-        model.addAttribute("user",user);
-        return "home/x";
-
-    }
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
+            return model;
+        }
 
 
 
