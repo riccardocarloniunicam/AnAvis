@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Bootstrap CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -11,17 +12,7 @@
     <link th:href="@{/css/profile.css}" href="/css/profile.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<script th:inline="javascript">
-    $(document).ready(function () {
 
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-
-
-    });
-</script>
 <div id="navbar">
 </div>
 
@@ -29,15 +20,18 @@
 <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
+    <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">  <p style="font-size: 15px;">Ciao <span th:utext="${user.nome}+' '+${user.cognome} "></span></p> </div>
+        <div class="sidebar-heading">  <p style="font-size: 15px;">Ciao <span sec:authentication="name"></span></p> </div>
         <div class="list-group list-group-flush">
             <a th:href="@{/home/home}" class="list-group-item list-group-item-action bg-light">Home</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Profilo</a>
+            <a sec:authorize="hasAnyAuthority('USER','DONATORE')" th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
+            <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/prenotazioni}" class="list-group-item list-group-item-action bg-light">Le tue Prenotazioni</a>
             <a th:href="@{/logout}" class="list-group-item list-group-item-action bg-light">Esci</a>
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
+    <!-- /#sidebar--->
 
     <!-- Page Content -->
     <div id="page-content-wrapper">

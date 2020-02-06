@@ -67,6 +67,9 @@ public class User {
         @Column(name = "emergenza")
         private int emergenza;
 
+    @Column(name = "modulo")
+    private int modulo;
+
 
 
 
@@ -74,7 +77,16 @@ public class User {
         @JoinTable(name="user_role", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="role_id"))
         private Set<Role> roles;
 
-        public int getId() {
+
+    public int getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(int modulo) {
+        this.modulo = modulo;
+    }
+
+    public int getId() {
             return id;
         }
 

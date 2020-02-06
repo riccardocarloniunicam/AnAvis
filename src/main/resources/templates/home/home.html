@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Bootstrap CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -30,6 +31,10 @@
             e.preventDefault();
            $(window.location).attr('href','/home/nuova-analisi');
         });
+        $("#new-modulo").click(function(e) {
+            e.preventDefault();
+            $(window.location).attr('href','/home/nuovo-modulo');
+        });
 
 
     });
@@ -42,10 +47,11 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">  <p style="font-size: 15px;">Ciao <span th:utext="${user.nome}+' '+${user.cognome} "></span></p> </div>
+        <div class="sidebar-heading">  <p style="font-size: 15px;">Ciao <span sec:authentication="name"></span></p> </div>
         <div class="list-group list-group-flush">
             <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
-            <a th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
+            <a sec:authorize="hasAnyAuthority('USER','DONATORE')" th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
+            <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/prenotazioni}" class="list-group-item list-group-item-action bg-light">Le tue Prenotazioni</a>
             <a th:href="@{/logout}" class="list-group-item list-group-item-action bg-light">Esci</a>
         </div>
     </div>
@@ -78,19 +84,37 @@
                 </ul>
             </div>
         </nav>
+        <div class="container"  sec:authorize="hasAuthority('USER')">
+            <h2>Benvenuto <span th:text="${user.nome}"></span></h2>
+            <p>Benvenuto in AnAvis.<br>
+                Attualmente non sei un <b style="color:red;">DONATORE</b> autorizzato.<br></p>
+            <p>Stato: </p><p sec:authentication="principal.authorities"></p>
 
-        <div class="container">
-            <h2>Benvenuto <span th:utext="${user.nome}+' '+${user.cognome}"></span></h2>
+            <hr>
+            <div sec:authorize="hasAuthority('USER')" th:style="${user.getModulo() == 1 ? 'display:none' : 'display:block'}" id="1">
+            <p>Compila il modulo per essere autorizzato a donare   <i id="new-modulo" class="fa fa-plus"></i></p>
+            <p>//TODO, METTERE NEWS DELLE SEDI</p>
+            </div>
+            <div sec:authorize="hasAuthority('USER')" th:style="${user.getModulo() == 1 ? 'display:block' : 'display:none'}" id="2">
+                <h3 style="color: green">Complimenti! Modulo inviato, attendi la fase di revisione da parte delle sedi</h3>
+                <p>Riceverai una mail con l'esito della tua approvazione.<br>
+                In caso di esito negativo, reinvia il modulo o contatta la sede.</p>
+            </div>
+        </div>
+
+<!-----DONATORE--->
+        <div class="container"  sec:authorize="hasAuthority('DONATORE')">
+            <h2>Benvenuto <span th:text="${user.nome}"></span></h2>
             <p>Benvenuto in AnAvis.<br>Con il nostro sitema puoi prenotare le i tuoi prelievi del sangue in modo semplice e veloce.</p>
+            <p>Stato: <p sec:authentication="principal.authorities"></p></p>
             <hr>
 
             <p>Prenota nuova analisi   <i id="new-analisi" class="fa fa-plus"></i></p>
             <p>//TODO, METTERE NEWS DELLE SEDI</p>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
-
 </div>
+
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->

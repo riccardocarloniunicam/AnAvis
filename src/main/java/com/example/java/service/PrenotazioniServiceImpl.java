@@ -23,13 +23,25 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     }
 
     @Override
-    public void savePrenotazione(Prenotazioni prenotazioni) {
+    public void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome) {
+        prenotazioni.setUser_id(user_id);
+        prenotazioni.setNome(nome);
+        prenotazioni.setCognome(cognome);
         prenotazioni.setStato("Prenotata");
         prenotazioniRepository.save(prenotazioni);
     }
 
     @Override
-    public List<Prenotazioni> findByorarioedata(String data, String orario) {
-        return prenotazioniRepository.findByOrarioAndData(data,orario);
+    public List<Prenotazioni> findByorarioedata(String data, String orario,Integer sede_id) {
+        return prenotazioniRepository.findByOrarioAndData(data,orario,sede_id);
+    }
+
+    @Override
+    public Boolean checkPrenotazione(String data, String orario, Integer sede_id) {
+        if (prenotazioniRepository.prenotazioneExist(data,orario,sede_id) == 1){
+            return true;
+        }else{
+            return  false;
+        }
     }
 }

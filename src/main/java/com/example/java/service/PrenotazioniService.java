@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface PrenotazioniService {
     List<Prenotazioni> listall();
-    void savePrenotazione(Prenotazioni prenotazioni);
-    List<Prenotazioni> findByorarioedata(String data, String orario);
+    void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome);
+    List<Prenotazioni> findByorarioedata(String data, String orario,Integer sede_id);
 
+    Boolean checkPrenotazione(String data,String orario,Integer sede_id);
 
 
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Bootstrap CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -29,14 +30,17 @@
 <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
+    <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-
+        <div class="sidebar-heading">  <p style="font-size: 15px;">Ciao <span sec:authentication="name"></span></p> </div>
         <div class="list-group list-group-flush">
-            <a th:href="@{/home/home}" class="list-group-item list-group-item-action bg-light">Home</a>
-            <a th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
+            <a sec:authorize="hasAnyAuthority('USER','DONATORE')" th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
+            <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/prenotazioni}" class="list-group-item list-group-item-action bg-light">Le tue Prenotazioni</a>
             <a th:href="@{/logout}" class="list-group-item list-group-item-action bg-light">Esci</a>
         </div>
     </div>
+    <!-- /#sidebar-wrapper -->
     <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
@@ -92,23 +96,31 @@
 
 
 
+
                                     <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
                                     </div>
-                                <select style="display: none" th:name="cognome" th:field="*{user_id}">
+                                    <!-----
+                                    <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7">
+                                <select style="display: block" th:name="cognome" th:field="*{user_id}">
                                     <option th:each="user :${user}" th:value="${user.id}" th:text="${user.id}">
                                     </option>
                                 </select>
+                                </div>
 
-                                <select style="display: none" th:name="nome" th:field="*{nome}">
+                                    <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7">
+                                <select style="display: block" th:name="nome" th:field="*{nome}">
                                     <option th:each="user :${user}" th:value="${user.nome}" th:text="${user.nome}">
                                     </option>
                                 </select>
+                                </div>
 
-                                <select style="display: none" th:name="cognome" th:field="*{cognome}">
+                                    <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7">
+                                <select style="display: block" th:name="cognome" th:field="*{cognome}">
                                     <option th:each="user :${user}" th:value="${user.cognome}" th:text="${user.cognome}">
                                     </option>
                                 </select>
-
+                                </div>
+--->
 
 
 

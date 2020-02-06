@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <title>Nuovo Modulo</title>
+</head>
+<body>
+<style>
+    input {
+        border: 0;
+        outline: 0;
+        background: transparent;
+        border-bottom: 1px solid black;
+    }
+</style>
+
+<script th:inline="javascript">
+
+
+    $('#submit').click(function(){
+
+    });
+</script>
+
+
+<div style=" width: 580px;border-radius: 10px; margin-left: 30%;" id="container">
+    <div>
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+            </div>
+        </div>
+
+        <form class="form-horizontal" role="form" method="POST" th:action="@{/home/nuovo-modulo}" th:object="${modulo}">
+        <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
+                         </span>
+        </div>
+            <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('residenza')}" th:errors="*{residenza}">
+                         </span>
+            </div>
+    <h3>Domanda di iscrizione alla sezione Avis</h3>
+
+    <p>Il sottoscritto <input id="nome" th:type="text" th:name="nome"></p>
+    <p>Nato a <input th:type="text" th:name="luogo_nascita"> il <input th:type="text" th:name="data_nascita"></p>
+    <p>Residente a<input th:type="text" th:name="residenza"> via <input th:type="text" th:name="indirzzo"></p>
+    <p>Professione<input th:type="text" th:name="professione"> tel.lavoro <input th:type="text" th:name="tellavoro"></p>
+    <p>Tel. casa<input th:type="text" th:name="telcasa"> tel_cell <input th:type="text" th:name="cellulare"></p>
+    <p>Email<input th:type="text" th:name="email"></p>
+
+    <p>Chiede di essere iscritto all'Associazione Volontari Italiani Sangue,<br>come socio donatore effettivo<br>
+    Dichiara di accettarne lo Statuto,Il regolamento aassociativo in vigore</p>
+
+    <p id="date"></p>
+    <hr>
+    <p>Dichiaro di aver ricevuto l'informativa sull'utilizzo dei miei dati personali,<br>ai sensi dell'art. 13 del D.Lsg. 196/2003</p>
+    <h2 style="margin-left: 30%;">CONSENTO</h2>
+    <p>Il loro trattamento nella misura necesaria per il perseguimento degli scopi salutari dell'Associazione.</p>
+
+        <button id="submit" th:type="submit">Conferma</button>
+        </form>
+</div>
+</div>
+
+
+
+
+</body>
+</html>

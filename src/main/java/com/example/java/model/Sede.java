@@ -8,7 +8,7 @@ public class Sede {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long sede_id;
+    private Integer sede_id;
 
 
     @Column(name = "regione")
@@ -57,11 +57,11 @@ public class Sede {
     private int regionale;
 
 
-    public Long getSede_id() {
+    public Integer getSede_id() {
         return sede_id;
     }
 
-    public void setSede_id(Long sede_id) {
+    public void setSede_id(Integer sede_id) {
         this.sede_id = sede_id;
     }
 

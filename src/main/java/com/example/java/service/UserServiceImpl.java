@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         user.setActive(1);
         user.setDonatore(0);
         user.setEmergenza(0);
+        user.setModulo(0);
         Role userRole = roleRespository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
@@ -64,7 +65,6 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
-
 
 
 
