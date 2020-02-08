@@ -81,24 +81,28 @@
                                 <hr style="margin:5px 0 5px 0;">
 
 
-                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 "><span th:utext="${prenotazione.nome}+' '+${prenotazione.cognome}"></span></div>
+
+    <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' "></div>
+
+                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
+                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getNome()+' '+prenotazione.getCognome()} : 'empty string message') : '' "></span></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+
+                                <div class="col-sm-5 col-xs-6 tital " >Data e ora:</div><div class="col-sm-7 col-xs-6 ">
+                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getData()+' '+prenotazione.getOrario()} : 'empty string message') : '' "></span></div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
+                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${sede.getRegione()+' '+sede.getCitta() +' '+sede.getCitta()} : 'empty string message') : '' "></span></div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
 
 
 
-                                <div class="col-sm-5 col-xs-6 tital " >Data e ora:</div><div class="col-sm-7 col-xs-6 "><span th:utext="${prenotazione.data} +' alle ' +${prenotazione.orario}"></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-
-                                <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7 col-xs-6 "><span th:utext="${sede.regione} +',' + ${sede.indirizzo}+' '+${sede.citta}+','+${sede.provincia}"></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-
-
-
+</div>
 
 
 

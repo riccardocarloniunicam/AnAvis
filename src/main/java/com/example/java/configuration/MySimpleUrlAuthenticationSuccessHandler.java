@@ -7,7 +7,6 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

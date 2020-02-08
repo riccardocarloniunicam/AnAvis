@@ -2,7 +2,6 @@ package com.example.java.repository;
 
 import com.example.java.model.Modulo;
 import com.example.java.model.Prenotazioni;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
