@@ -212,8 +212,13 @@ public class UserController  {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(user.getId());
-        model.addAttribute("prenotazione",prenotazioniService.getPrenotazionebyID(prenotazioni.getId()));
-        model.addAttribute("sede",sedeService.getSede(prenotazioni.getSede_id()));
+        if (prenotazioni==null){
+            model.addAttribute("prenotazione","null");
+        }else {
+            model.addAttribute("prenotazione",prenotazioniService.getPrenotazionebyID(prenotazioni.getId()));
+            model.addAttribute("sede",sedeService.getSede(prenotazioni.getSede_id()));
+
+        }
         return "home/prenotazioni";
 
     }
