@@ -14,6 +14,8 @@ public interface SedeRepository extends JpaRepository<Sede, Long> {
 
     Sede findByEmail(String email);
 
+    @Query(value = "SELECT * FROM sede WHERE sede_id = ?1",nativeQuery = true)
+    Sede findSedeById(Integer id);
 
 
 }

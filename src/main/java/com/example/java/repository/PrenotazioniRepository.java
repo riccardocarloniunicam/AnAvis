@@ -19,4 +19,18 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    @Query(value = " select count(*) from prenotazioni where data=?1 and orario =?2 and sede_id = ?3",nativeQuery = true)
    Integer prenotazioneExist(String data,String orario,Integer sede_id);
 
+
+
+   @Query(value = "SELECT * FROM prenotazioni WHERE user_id=?1",nativeQuery = true)
+   Prenotazioni findPrenotazioneByUserID(Integer id);
+
+
+
+   @Query(value = "SELECT * FROM prenotazioni WHERE id=?1",nativeQuery = true)
+   Prenotazioni findPrenotazioneById(Integer id);
+
+   //vede se l'utente ha già effettuato la sua prenotazione
+   @Query(value = "SELECT count(*) FROM prenotazioni where user_id = ?1",nativeQuery = true)
+   Integer prenotazioneGiaEffettuata(Integer user_id);
+
 }

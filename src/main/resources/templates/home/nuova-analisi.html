@@ -93,34 +93,17 @@
                          <span class="text-danger align-middle" th:if="${#fields.hasErrors('orario')}" th:errors="*{orario}">
                          </span>
                                         </div>
+                                    <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">
+                         </span>
+                                    </div>
 
 
 
 
                                     <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
                                     </div>
-                                    <!-----
-                                    <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7">
-                                <select style="display: block" th:name="cognome" th:field="*{user_id}">
-                                    <option th:each="user :${user}" th:value="${user.id}" th:text="${user.id}">
-                                    </option>
-                                </select>
-                                </div>
 
-                                    <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7">
-                                <select style="display: block" th:name="nome" th:field="*{nome}">
-                                    <option th:each="user :${user}" th:value="${user.nome}" th:text="${user.nome}">
-                                    </option>
-                                </select>
-                                </div>
-
-                                    <div class="col-sm-5 col-xs-6 tital " >Sede:</div><div class="col-sm-7">
-                                <select style="display: block" th:name="cognome" th:field="*{cognome}">
-                                    <option th:each="user :${user}" th:value="${user.cognome}" th:text="${user.cognome}">
-                                    </option>
-                                </select>
-                                </div>
---->
 
 
 

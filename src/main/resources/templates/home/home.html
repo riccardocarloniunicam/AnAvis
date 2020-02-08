@@ -84,6 +84,7 @@
                 </ul>
             </div>
         </nav>
+
         <div class="container"  sec:authorize="hasAuthority('USER')">
             <h2>Benvenuto <span th:text="${user.nome}"></span></h2>
             <p>Benvenuto in AnAvis.<br>

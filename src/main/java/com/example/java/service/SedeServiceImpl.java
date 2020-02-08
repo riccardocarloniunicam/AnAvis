@@ -29,7 +29,8 @@ public class SedeServiceImpl implements SedeService {
         return sedeRepository.findAll();
     }
 
-
-
-
+    @Override
+    public Sede getSede(Integer id) {
+        return sedeRepository.findSedeById(id);
+    }
 }

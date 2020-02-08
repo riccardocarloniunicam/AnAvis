@@ -29,22 +29,26 @@ import java.util.List;
 
 @Controller
 public class UserController  {
-
     @Autowired
     private UserService userService;
 
-@Autowired
-private SedeService sedeService;
+    @Autowired
+    private SedeService sedeService;
 
-@Autowired
-private PrenotazioniService prenotazioniService;
+    @Autowired
+    private PrenotazioniService prenotazioniService;
 
     @Autowired
     private ModuloService moduloService;
 
 
 
-
+    @RequestMapping(value= {"/sede/home"}, method=RequestMethod.GET)
+    public ModelAndView sede() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("sede/home");
+        return model;
+    }
 
     @RequestMapping(value= {"/","/login"}, method=RequestMethod.GET)
     public ModelAndView login() {
@@ -52,8 +56,6 @@ private PrenotazioniService prenotazioniService;
         model.setViewName("user/login");
         return model;
     }
-
-
 
     @RequestMapping(value= {"/signup"}, method=RequestMethod.GET)
     public ModelAndView signup() {
@@ -106,7 +108,6 @@ private PrenotazioniService prenotazioniService;
         return check(modulo,bindingResult);
     }
 
-
     @RequestMapping(value= {"/signup"}, method=RequestMethod.POST)
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
@@ -121,13 +122,11 @@ private PrenotazioniService prenotazioniService;
             model.addObject("msg", "User has been registered successfully!");
             model.addObject("user", new User());
             model.setViewName("user/signup");
-
         }
 
         return model;
     }
 
-    //Implementare vmc
     @RequestMapping(value= {"/home/home"}, method=RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView model = new ModelAndView();
@@ -182,11 +181,15 @@ private PrenotazioniService prenotazioniService;
     @RequestMapping(value ={"/home/nuova-analisi"} , method = RequestMethod.POST)
     public ModelAndView confermaPrenotazione(@Valid Prenotazioni prenotazioni,BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        if (prenotazioniService.prenotazioneEffettuata(user.getId())){
+            bindingResult.rejectValue("user_id", "error.prenotazioni", "Hai raggiunto il numero massimo di prenotazioni");
+        }else
         if (prenotazioni.getData() == null || prenotazioni.getData().equals("")){
             bindingResult.rejectValue("data", "error.prenotazioni", "La data non può essere vuota");
         }
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+
         if (prenotazioniService.checkPrenotazione(prenotazioni.getData(),prenotazioni.getOrario(),prenotazioni.getSede_id())){
             bindingResult.rejectValue("orario", "error.prenotazioni", "Orario e data per l'appuntamento sono occupato! Scegli un altra ora");
         }
@@ -203,17 +206,17 @@ private PrenotazioniService prenotazioniService;
         }
             return model;
         }
-    //PRENOTAZIONI GET
-    @RequestMapping(value = {"/home/prenotazioni"},method = RequestMethod.GET)
-    public ModelAndView prenotazioni(){
+
+    @RequestMapping(value = "home/prenotazioni", method = RequestMethod.GET)
+    public String prenotazioni(Model model,HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user",user);
-        modelAndView.setViewName("home/prenotazioni");
-        return modelAndView;
-    }
+        Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(user.getId());
+        model.addAttribute("prenotazione",prenotazioniService.getPrenotazionebyID(prenotazioni.getId()));
+        model.addAttribute("sede",sedeService.getSede(prenotazioni.getSede_id()));
+        return "home/prenotazioni";
 
+    }
 
 
 

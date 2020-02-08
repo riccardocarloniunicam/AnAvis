@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <title>SEDE HOME</title>
+</head>
+<body>
+<h1>WELCOME SEDE</h1>
+<p>Stato: </p><p sec:authentication="principal.authorities"></p>
+
+
+</body>
+</html>

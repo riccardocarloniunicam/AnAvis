@@ -14,6 +14,9 @@ public interface PrenotazioniService {
 
     Boolean checkPrenotazione(String data,String orario,Integer sede_id);
 
+    Prenotazioni getPrenotazioni(Integer id);
+    Prenotazioni getPrenotazionebyID(Integer id);
 
+    Boolean prenotazioneEffettuata(Integer user_id);
 
 }

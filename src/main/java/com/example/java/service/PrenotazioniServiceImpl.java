@@ -44,4 +44,23 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
             return  false;
         }
     }
+
+    @Override
+    public Prenotazioni getPrenotazioni(Integer id) {
+        return  prenotazioniRepository.findPrenotazioneByUserID(id);
+    }
+
+    @Override
+    public Prenotazioni getPrenotazionebyID(Integer id) {
+        return prenotazioniRepository.findPrenotazioneById(id);
+    }
+
+    @Override
+    public Boolean prenotazioneEffettuata(Integer user_id) {
+        if (prenotazioniRepository.prenotazioneGiaEffettuata(user_id) == 1){
+            return true;
+        }else{
+            return  false;
+        }
+    }
 }
