@@ -10,6 +10,7 @@ import com.example.java.model.Sede;
 import com.example.java.service.ModuloService;
 import com.example.java.service.PrenotazioniService;
 import com.example.java.service.SedeService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -213,11 +214,11 @@ public class UserController  {
         Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(user.getId());
         if (prenotazioni==null){
             model.addAttribute("prenotazione","null");
-        }else{
+        }else {
             model.addAttribute("prenotazione",prenotazioniService.getPrenotazionebyID(prenotazioni.getId()));
             model.addAttribute("sede",sedeService.getSede(prenotazioni.getSede_id()));
-        }
 
+        }
         return "home/prenotazioni";
 
     }

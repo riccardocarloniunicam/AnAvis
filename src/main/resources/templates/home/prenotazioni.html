@@ -67,7 +67,7 @@
                 <div class="col-md-7 ">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">  <h4 >La tua Prenotazioni</h4></div>
+                        <div class="panel-heading">  <h4 >La tua Prenotazione</h4></div>
                         <div class="panel-body">
 
                             <div class="box box-info">
@@ -82,7 +82,7 @@
 
 
 
-    <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' "></div>
+                                <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' "></div>
 
                                 <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
                                 <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getNome()+' '+prenotazione.getCognome()} : 'empty string message') : '' "></span></div>
@@ -102,7 +102,7 @@
 
 
 
-</div>
+                            </div>
 
 
 
@@ -110,7 +110,13 @@
 
 
 
-                                <!-- /.box-body -->
+
+
+
+
+
+
+                            <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
 
