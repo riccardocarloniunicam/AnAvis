@@ -85,6 +85,7 @@
             </div>
         </nav>
 
+
         <div class="container"  sec:authorize="hasAuthority('USER')">
             <h2>Benvenuto <span th:text="${user.nome}"></span></h2>
             <p>Benvenuto in AnAvis.<br>
@@ -106,6 +107,7 @@
 <!-----DONATORE--->
         <div class="container"  sec:authorize="hasAuthority('DONATORE')">
             <h2>Benvenuto <span th:text="${user.nome}"></span></h2>
+
             <p>Benvenuto in AnAvis.<br>Con il nostro sitema puoi prenotare le i tuoi prelievi del sangue in modo semplice e veloce.</p>
             <p>Stato: <p sec:authentication="principal.authorities"></p></p>
             <hr>

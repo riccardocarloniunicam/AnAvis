@@ -81,13 +81,23 @@
                                 <hr style="margin:5px 0 5px 0;">
 
 
+                                <div class="col-md-6">
+                                    <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+                                    </div>
+                                </div>
 
-                                <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' "></div>
+
+                                <div th:style="${prenotazione == 'null' ? 'display:none' : 'display:block'}" id="1">
+                                <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' ">
+
+                                </div>
+
 
                                 <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
                                 <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getNome()+' '+prenotazione.getCognome()} : 'empty string message') : '' "></span></div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+
 
 
                                 <div class="col-sm-5 col-xs-6 tital " >Data e ora:</div><div class="col-sm-7 col-xs-6 ">
@@ -102,7 +112,17 @@
 
 
 
+                                <form  th:action="@{/home/cancella-prenotazione/}" method="get">
+                                    <button class="button" th:type="submit">Elimina prenotazione</button>
+                                </form>
+                                </div>
+                                </div>
+
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div></div></div>
 
 
 

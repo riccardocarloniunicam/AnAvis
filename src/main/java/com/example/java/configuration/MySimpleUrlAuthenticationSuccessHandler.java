@@ -3,6 +3,8 @@ package com.example.java.configuration;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -23,6 +25,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1,
                                         Authentication authentication) throws IOException, ServletException {
+
 
         boolean hasUserRole = false;
         boolean hasDonatoreRole = false;
@@ -53,5 +56,6 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
             throw new IllegalStateException();
         }
     }
+
 
 }

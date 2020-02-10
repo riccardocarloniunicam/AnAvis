@@ -19,4 +19,6 @@ public interface PrenotazioniService {
 
     Boolean prenotazioneEffettuata(Integer user_id);
 
+    void delete(Integer id);
+
 }

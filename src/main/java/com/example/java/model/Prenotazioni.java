@@ -33,6 +33,7 @@ public class Prenotazioni {
     @Column(name = "user_id")
     private int user_id;
 
+
     public String getStato() {
         return stato;
     }

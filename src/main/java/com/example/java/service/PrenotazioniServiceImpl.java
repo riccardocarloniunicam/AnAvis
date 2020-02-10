@@ -63,4 +63,9 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
             return  false;
         }
     }
+
+    @Override
+    public void delete(Integer id) {
+        prenotazioniRepository.deletePrenotazione(id);
+    }
 }

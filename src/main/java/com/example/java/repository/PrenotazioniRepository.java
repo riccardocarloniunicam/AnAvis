@@ -4,12 +4,14 @@ import com.example.java.model.Prenotazioni;
 import com.example.java.model.Sede;
 import com.example.java.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-
+@Transactional
 @Repository("prenotazioniRepository")
 public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long> {
 
@@ -32,5 +34,9 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    //vede se l'utente ha già effettuato la sua prenotazione
    @Query(value = "SELECT count(*) FROM prenotazioni where user_id = ?1",nativeQuery = true)
    Integer prenotazioneGiaEffettuata(Integer user_id);
+
+   @Modifying
+   @Query(value = "delete from prenotazioni where user_id=?1",nativeQuery = true)
+   void deletePrenotazione(Integer id);
 
 }

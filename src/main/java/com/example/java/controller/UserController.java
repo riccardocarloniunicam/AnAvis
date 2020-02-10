@@ -13,6 +13,7 @@ import com.example.java.service.SedeService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +42,13 @@ public class UserController  {
     @Autowired
     private ModuloService moduloService;
 
+private User userInfo;
 
+
+    public User getUserInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userService.findUserByEmail(auth.getName());
+    }
 
     @RequestMapping(value= {"/sede/home"}, method=RequestMethod.GET)
     public ModelAndView sede() {
@@ -70,8 +77,8 @@ public class UserController  {
     public ModelAndView modulo() {
         ModelAndView model = new ModelAndView();
         Modulo modulo = new Modulo(); //vuota
-       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addObject("user",userService.findUserByEmail(auth.getName()));
+
+        model.addObject("user",getUserInfo());
         model.addObject("modulo", modulo);
         model.setViewName("home/nuovo-modulo");
         return model;
@@ -80,10 +87,8 @@ public class UserController  {
 
     public ModelAndView check(@Valid Modulo modulo, BindingResult bindingResult){
         ModelAndView model = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
 
-        if (moduloService.moduloEsiste(user.getId())){
+        if (moduloService.moduloEsiste(getUserInfo().getId())){
             bindingResult.rejectValue("nome", "error.modulo", "Hai già inviato il modulo. Attendi la revisione degli amministratori per inviarne uno nuovo");
         }else
         if (!moduloService.checkInput(modulo)){
@@ -92,7 +97,7 @@ public class UserController  {
         if(bindingResult.hasErrors()) {
             model.setViewName("home/nuovo-modulo");
         }else {
-            moduloService.saveModulo(modulo,user.getId());
+            moduloService.saveModulo(modulo,getUserInfo().getId());
             model.addObject("modulo", new Modulo());
             model.addObject("msg", "Prenotazione Effettuata con Successo!");
             model.setViewName("home/nuovo-modulo");
@@ -130,9 +135,7 @@ public class UserController  {
     @RequestMapping(value= {"/home/home"}, method=RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView model = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        model.addObject("user",user);
+        model.addObject("user",getUserInfo());
         model.setViewName("home/home");
         return model;
     }
@@ -141,15 +144,13 @@ public class UserController  {
     //Prendo i dati della persona che chiama il metodo.
     @RequestMapping(value = "home/profile", method = RequestMethod.GET)
     public String profile(Model model, HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User author = userService.findUserByEmail(auth.getName());
-        return "redirect:/home/profile/" + author.getEmail();
+        return "redirect:/home/profile/" + getUserInfo().getNome();
     }
 
     //get the person and all his informations;
-    @RequestMapping(value = "/home/profile/{personEmail}", method = RequestMethod.GET)
-    public String seeProfileTrue(@PathVariable(value="personEmail")String personEmail,Model model, HttpServletRequest request) {
-        model.addAttribute("user",userService.findUserByEmail(personEmail));
+    @RequestMapping(value = "/home/profile/{name}", method = RequestMethod.GET)
+    public String seeProfileTrue(@PathVariable(value="name")String personEmail,Model model, HttpServletRequest request) {
+        model.addAttribute("user",getUserInfo());
         return "home/profile";
     }
 
@@ -161,11 +162,8 @@ public class UserController  {
         ModelAndView model = new ModelAndView();
        Prenotazioni prenotazione = new Prenotazioni(); //vuota
        //
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        User user = userService.findUserByEmail(auth.getName());
         List<Sede> sede = sedeService.listAll();
-        model.addObject("user",user);
+        model.addObject("user",getUserInfo());
         model.addObject("sede",sede);
         //
         model.addObject("prenotazioni", prenotazione);
@@ -181,9 +179,7 @@ public class UserController  {
     @RequestMapping(value ={"/home/nuova-analisi"} , method = RequestMethod.POST)
     public ModelAndView confermaPrenotazione(@Valid Prenotazioni prenotazioni,BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        if (prenotazioniService.prenotazioneEffettuata(user.getId())){
+        if (prenotazioniService.prenotazioneEffettuata(getUserInfo().getId())){
             bindingResult.rejectValue("user_id", "error.prenotazioni", "Hai raggiunto il numero massimo di prenotazioni");
         }else
         if (prenotazioni.getData() == null || prenotazioni.getData().equals("")){
@@ -197,7 +193,7 @@ public class UserController  {
         if(bindingResult.hasErrors()) {
             model.setViewName("home/nuova-analisi");
         }else {
-            prenotazioniService.savePrenotazione(prenotazioni,user.getId(),user.getNome(),user.getCognome());
+            prenotazioniService.savePrenotazione(prenotazioni,getUserInfo().getId(),getUserInfo().getNome(),getUserInfo().getCognome());
             model.addObject("prenotazioni", new Prenotazioni());
             model.addObject("msg", "Prenotazione Effettuata con Successo!");
             model.setViewName("home/nuova-analisi");
@@ -209,9 +205,7 @@ public class UserController  {
 
     @RequestMapping(value = "home/prenotazioni", method = RequestMethod.GET)
     public String prenotazioni(Model model,HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(user.getId());
+        Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(getUserInfo().getId());
         if (prenotazioni==null){
             model.addAttribute("prenotazione","null");
         }else {
@@ -225,11 +219,19 @@ public class UserController  {
 
 
 
+    @RequestMapping(value = "home/cancella-prenotazione", method = RequestMethod.GET)
+    public String cancellaPrenotazione(Model model, HttpServletRequest request) {
+        return "redirect:/home/cancella-prenotazione/" + getUserInfo().getId();
+    }
 
-
-
-
-
+    //get the person and all his informations;
+    @RequestMapping(value = "/home/cancella-prenotazione/{id}", method = RequestMethod.GET)
+    public String CancellaPrenotazioneid(@PathVariable(value="id")Integer  id,Model model, HttpServletRequest request) {
+        prenotazioniService.delete(id);
+        model.addAttribute("prenotazione","null");
+        model.addAttribute("msg", "Prenotazione Cancellata con Successo!");
+        return "home/prenotazioni";
+    }
 
 
     @RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)
