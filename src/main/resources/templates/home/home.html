@@ -95,7 +95,7 @@
             <hr>
             <div sec:authorize="hasAuthority('USER')" th:style="${user.getModulo() == 1 ? 'display:none' : 'display:block'}" id="1">
             <p>Compila il modulo per essere autorizzato a donare   <i id="new-modulo" class="fa fa-plus"></i></p>
-            <p>//TODO, METTERE NEWS DELLE SEDI</p>
+
             </div>
             <div sec:authorize="hasAuthority('USER')" th:style="${user.getModulo() == 1 ? 'display:block' : 'display:none'}" id="2">
                 <h3 style="color: green">Complimenti! Modulo inviato, attendi la fase di revisione da parte delle sedi</h3>
@@ -113,9 +113,43 @@
             <hr>
 
             <p>Prenota nuova analisi   <i id="new-analisi" class="fa fa-plus"></i></p>
-            <p>//TODO, METTERE NEWS DELLE SEDI</p>
+            <hr>
+
+    <h2>NEWS DELLE SEDI</h2>
+            <div  id="news_sedi"></div>
+
         </div>
     </div>
+
+
+
+    <script th:inline="javascript">
+        var html="";
+        $.ajax({
+            url: "/getnews",
+            type: "GET",
+            success:function (data){
+                $.each(data, function(index, value) {
+                    html+="<div>"
+                    html+="<label style='color: green;font-size: 16px;'>Titolo:</label>"
+                    html+= "<p>"+value.titolo+"</p>"
+                    html+="</div>"
+                    html+="<div>"
+                    html+= "<p>"+value.messaggio+"</p>"
+                    html+="</div>"
+                    html+="<div>"
+                    html+= "<p style='margin-left: 150px;font-size: 8px;color: darkgray'>"+value.email+"</p>"
+                    html+="</div>"
+                    html+="<hr>"
+
+                    $("#news_sedi").html(html)
+                });
+
+            },error: function (a,b,c) {
+
+            }
+        })
+    </script>
 </div>
 
 <!-- /#wrapper -->

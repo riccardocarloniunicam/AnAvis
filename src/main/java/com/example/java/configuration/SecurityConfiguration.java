@@ -41,18 +41,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //utenti
+        //sedi
         auth.jdbcAuthentication()
                 //RUOLO NON FUNZIONA
                 .usersByUsernameQuery(SEDE_QUERY).authoritiesByUsernameQuery(ROLES_SEDI_QUERY).dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
 
-
+        //utenti
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(USERS_QUERY)
                 .authoritiesByUsernameQuery(ROLES_QUERY)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
-        //sedi
+
     }
 
 

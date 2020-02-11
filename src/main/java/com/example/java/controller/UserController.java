@@ -4,14 +4,11 @@ package com.example.java.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.example.java.model.Modulo;
-import com.example.java.model.Prenotazioni;
-import com.example.java.model.Sede;
-import com.example.java.service.ModuloService;
-import com.example.java.service.PrenotazioniService;
-import com.example.java.service.SedeService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.example.java.model.*;
+import com.example.java.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,9 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import com.example.java.model.User;
-import com.example.java.service.UserService;
 
 import java.util.List;
 
@@ -42,7 +36,10 @@ public class UserController  {
     @Autowired
     private ModuloService moduloService;
 
-private User userInfo;
+
+    @Autowired
+    private NewsService newsService;
+    private NewsService news;
 
 
     public User getUserInfo() {
@@ -50,12 +47,7 @@ private User userInfo;
         return userService.findUserByEmail(auth.getName());
     }
 
-    @RequestMapping(value= {"/sede/home"}, method=RequestMethod.GET)
-    public ModelAndView sede() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("sede/home");
-        return model;
-    }
+
 
     @RequestMapping(value= {"/","/login"}, method=RequestMethod.GET)
     public ModelAndView login() {
@@ -72,6 +64,16 @@ private User userInfo;
         model.setViewName("user/signup");
         return model;
     }
+
+
+
+    @RequestMapping(value = {"/getnews"},method = RequestMethod.GET)
+    public ResponseEntity<Object> getNews(){
+        List<News> listaNews = newsService.listall();
+        return new ResponseEntity<>(listaNews, HttpStatus.OK);
+
+    }
+
 
     @RequestMapping(value= {"/home/nuovo-modulo"}, method=RequestMethod.GET)
     public ModelAndView modulo() {
@@ -155,83 +157,6 @@ private User userInfo;
     }
 
 
-
-
-    @RequestMapping(value= {"/home/nuova-analisi"}, method=RequestMethod.GET)
-    public ModelAndView prenota() {
-        ModelAndView model = new ModelAndView();
-       Prenotazioni prenotazione = new Prenotazioni(); //vuota
-       //
-        List<Sede> sede = sedeService.listAll();
-        model.addObject("user",getUserInfo());
-        model.addObject("sede",sede);
-        //
-        model.addObject("prenotazioni", prenotazione);
-        model.setViewName("home/nuova-analisi");
-
-        return model;
-    }
-
-
-
-
-//PRENOTAZIONI POST
-    @RequestMapping(value ={"/home/nuova-analisi"} , method = RequestMethod.POST)
-    public ModelAndView confermaPrenotazione(@Valid Prenotazioni prenotazioni,BindingResult bindingResult) throws InterruptedException {
-        ModelAndView model = new ModelAndView();
-        if (prenotazioniService.prenotazioneEffettuata(getUserInfo().getId())){
-            bindingResult.rejectValue("user_id", "error.prenotazioni", "Hai raggiunto il numero massimo di prenotazioni");
-        }else
-        if (prenotazioni.getData() == null || prenotazioni.getData().equals("")){
-            bindingResult.rejectValue("data", "error.prenotazioni", "La data non può essere vuota");
-        }
-
-        if (prenotazioniService.checkPrenotazione(prenotazioni.getData(),prenotazioni.getOrario(),prenotazioni.getSede_id())){
-            bindingResult.rejectValue("orario", "error.prenotazioni", "Orario e data per l'appuntamento sono occupato! Scegli un altra ora");
-        }
-
-        if(bindingResult.hasErrors()) {
-            model.setViewName("home/nuova-analisi");
-        }else {
-            prenotazioniService.savePrenotazione(prenotazioni,getUserInfo().getId(),getUserInfo().getNome(),getUserInfo().getCognome());
-            model.addObject("prenotazioni", new Prenotazioni());
-            model.addObject("msg", "Prenotazione Effettuata con Successo!");
-            model.setViewName("home/nuova-analisi");
-            System.out.println("Prenotazione Effettuata con Successo");
-
-        }
-            return model;
-        }
-
-    @RequestMapping(value = "home/prenotazioni", method = RequestMethod.GET)
-    public String prenotazioni(Model model,HttpServletRequest request) {
-        Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(getUserInfo().getId());
-        if (prenotazioni==null){
-            model.addAttribute("prenotazione","null");
-        }else {
-            model.addAttribute("prenotazione",prenotazioniService.getPrenotazionebyID(prenotazioni.getId()));
-            model.addAttribute("sede",sedeService.getSede(prenotazioni.getSede_id()));
-
-        }
-        return "home/prenotazioni";
-
-    }
-
-
-
-    @RequestMapping(value = "home/cancella-prenotazione", method = RequestMethod.GET)
-    public String cancellaPrenotazione(Model model, HttpServletRequest request) {
-        return "redirect:/home/cancella-prenotazione/" + getUserInfo().getId();
-    }
-
-    //get the person and all his informations;
-    @RequestMapping(value = "/home/cancella-prenotazione/{id}", method = RequestMethod.GET)
-    public String CancellaPrenotazioneid(@PathVariable(value="id")Integer  id,Model model, HttpServletRequest request) {
-        prenotazioniService.delete(id);
-        model.addAttribute("prenotazione","null");
-        model.addAttribute("msg", "Prenotazione Cancellata con Successo!");
-        return "home/prenotazioni";
-    }
 
 
     @RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)

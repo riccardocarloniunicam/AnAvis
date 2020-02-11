@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "utente_sedi")
-public class Utente_Sedi {
+public class UtenteSedi {
 
 
     @Id
