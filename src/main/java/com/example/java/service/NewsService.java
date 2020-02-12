@@ -8,5 +8,6 @@ public interface NewsService {
 
 
     List<News> listall();
+
     void saveNews(News news,Integer sede_id,String email);
 }

@@ -1,6 +1,7 @@
 package com.example.java.repository;
 
 
+import com.example.java.model.Modulo;
 import com.example.java.model.User;
 import com.example.java.model.UtenteSedi;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,7 @@ public interface UtenteSediRepository extends JpaRepository<UtenteSedi,Long> {
 
     @Query(value = "SELECT * from utente_sedi where email=?1",nativeQuery = true)
     UtenteSedi findByEmail(String email);
+
+
 
 }

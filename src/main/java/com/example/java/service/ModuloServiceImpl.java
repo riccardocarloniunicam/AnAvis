@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 @Service("moduloService")
@@ -18,6 +20,13 @@ public class ModuloServiceImpl implements  ModuloService{
 
     @Override
     public void saveModulo(Modulo modulo, Integer id) {
+        LocalDate localDate = LocalDate.now();
+        int giorno = localDate.getDayOfMonth();
+        Month mese = localDate.getMonth();
+        int anno = localDate.getYear();
+        String data = giorno+" "+mese+" "+anno;
+        modulo.setData(data);
+        modulo.setStatus("INVIATO");
         modulo.setUser_id(id);
         putModuleParameter(id);
         moduloRepository.save(modulo);
@@ -58,5 +67,16 @@ public class ModuloServiceImpl implements  ModuloService{
         }else{
             return true;
         }
+    }
+
+
+    @Override
+    public void deleteById(Integer id) {
+         moduloRepository.deleteModuloById(id);
+    }
+
+    @Override
+    public Modulo findDaID(Integer id) {
+        return moduloRepository.findModuloById(id);
     }
 }

@@ -48,6 +48,16 @@ public class Modulo {
     @Column(name = "user_id")
     private int user_id;
 
+    @Column(name = "status")
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

@@ -66,6 +66,28 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public List<User> findToApprove() {
+        return userRepository.findAllToApprove();
+    }
 
+    @Override
+    public User findByIdForApprovazione(Integer id) {
+        return userRepository.findTheUser(id);
+    }
 
+    @Override
+    public Integer UpgradeRole(Integer id) {
+        return userRepository.UpgradeDonatore(id);
+    }
+
+    @Override
+    public Integer UpgradeParamDonatore(Integer id) {
+        return userRepository.UppaParametroDonatore(id);
+    }
+
+    @Override
+    public Integer downGradeParamModulo(Integer id) {
+        return userRepository.DownGrandeParametroModulo(id);
+    }
 }

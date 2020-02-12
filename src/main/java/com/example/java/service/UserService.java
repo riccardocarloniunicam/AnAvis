@@ -16,6 +16,18 @@ public interface UserService {
      void delete(Long id);
      Optional<User> findUserById(Long id);
 
+     List<User> findToApprove();
+
+
+     User findByIdForApprovazione(Integer id);
+
+     Integer UpgradeRole(Integer id); //upgrade role
+
+     Integer UpgradeParamDonatore(Integer id); //upgrade parametro donatore nel database;
+
+
+     Integer downGradeParamModulo(Integer id);
+
 
 
 

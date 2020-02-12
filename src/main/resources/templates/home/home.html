@@ -131,8 +131,12 @@
             success:function (data){
                 $.each(data, function(index, value) {
                     html+="<div>"
-                    html+="<label style='color: green;font-size: 16px;'>Titolo:</label>"
-                    html+= "<p>"+value.titolo+"</p>"
+                    html+="<label style='color: green;font-size: 16px;'>Data: </label>"
+                    html+= "<span style='font-size: 13px;'>"+' '+" "+value.data+"</span>"
+                    html+="</div>"
+                    html+="<div>"
+                    html+="<label style='color: green;font-size: 16px;'>Titolo: </label>"
+                    html+= "<span> "+' '+"  "+value.titolo+"</span>"
                     html+="</div>"
                     html+="<div>"
                     html+= "<p>"+value.messaggio+"</p>"

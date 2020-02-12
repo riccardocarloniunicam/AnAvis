@@ -9,4 +9,6 @@ import java.util.List;
 public interface UtenteSediService {
     List<UtenteSedi> listAll();
     UtenteSedi findUserByEmail(String email);
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.java.service;
 
 
+import com.example.java.model.User;
 import com.example.java.model.UtenteSedi;
 import com.example.java.repository.UserRepository;
 import com.example.java.repository.UtenteSediRepository;
@@ -28,6 +29,9 @@ public class UtenteSediServiceImpl implements UtenteSediService {
     public UtenteSedi findUserByEmail(String email) {
         return utenteSediRepository.findByEmail(email);
     }
+
+
+
 }
 
 

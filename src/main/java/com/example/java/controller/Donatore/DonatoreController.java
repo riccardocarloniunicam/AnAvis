@@ -1,4 +1,4 @@
-package com.example.java.controller;
+package com.example.java.controller.Donatore;
 
 
 import com.example.java.model.User;

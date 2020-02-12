@@ -26,4 +26,15 @@ public interface ModuloRepository  extends JpaRepository<Modulo,Long> {
     @Query(value = "SELECT modulo FROM user WHERE id = ?1",nativeQuery = true)
     Integer ModuleExist(Integer id);
 
+
+
+    @Query(value = "select * from modulo where user_id =?1",nativeQuery = true)
+    Modulo findModuloById(Integer id);
+
+    @Modifying
+    @Query("delete from Modulo u where u.user_id =?1")
+    void deleteModuloById(Integer id);
+
+
+
 }

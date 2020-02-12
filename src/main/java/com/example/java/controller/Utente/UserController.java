@@ -1,4 +1,4 @@
-package com.example.java.controller;
+package com.example.java.controller.Utente;
 
 
 import javax.servlet.http.HttpServletRequest;

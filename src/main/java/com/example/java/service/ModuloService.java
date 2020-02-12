@@ -12,4 +12,8 @@ public interface ModuloService {
     Integer putModuleParameter(Integer id);
     Boolean moduloEsiste(Integer id);
     Boolean checkInput(Modulo modulo);
+
+    Modulo findDaID(Integer id);
+
+    void deleteById(Integer id);
 }

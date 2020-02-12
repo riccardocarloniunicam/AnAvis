@@ -1,4 +1,4 @@
-package com.example.java.controller;
+package com.example.java.controller.Sede;
 
 
 import com.example.java.model.*;
@@ -29,8 +29,6 @@ public class SedeController {
 
 
 
-
-
     @RequestMapping(value= {"/sede/home"}, method= RequestMethod.GET)
     public ModelAndView sede() {
         ModelAndView model = new ModelAndView();
@@ -47,7 +45,6 @@ public class SedeController {
         model.setViewName("sede/inserisci-news");
         return model;
     }
-
 
     @RequestMapping(value= {"/sede/inserisci-news"}, method=RequestMethod.POST)
     public ModelAndView nuovoModulo(@Valid News news, BindingResult bindingResult) throws InterruptedException {
