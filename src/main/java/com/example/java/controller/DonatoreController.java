@@ -43,14 +43,14 @@ public class DonatoreController {
     @Autowired
     private ModuloService moduloService;
 
-    public User getUserInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userService.findUserByEmail(auth.getName());
-    }
+    @Autowired
+    private User userr;
+
+
 
     @RequestMapping(value = "home/prenotazioni", method = RequestMethod.GET)
     public String prenotazioni(Model model,HttpServletRequest request) {
-        Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(getUserInfo().getId());
+        Prenotazioni prenotazioni = prenotazioniService.getPrenotazioni(userr.getId());
         if (prenotazioni==null){
             model.addAttribute("prenotazione","null");
         }else {
@@ -65,7 +65,7 @@ public class DonatoreController {
 
     @RequestMapping(value = "home/cancella-prenotazione", method = RequestMethod.GET)
     public String cancellaPrenotazione(Model model, HttpServletRequest request) {
-        return "redirect:/home/cancella-prenotazione/" + getUserInfo().getId();
+        return "redirect:/home/cancella-prenotazione/" + userr.getId();
     }
 
     //get the person and all his informations;
@@ -84,7 +84,7 @@ public class DonatoreController {
         Prenotazioni prenotazione = new Prenotazioni(); //vuota
         //
         List<Sede> sede = sedeService.listAll();
-        model.addObject("user",getUserInfo());
+        model.addObject("user",userr);
         model.addObject("sede",sede);
         //
         model.addObject("prenotazioni", prenotazione);
@@ -100,7 +100,7 @@ public class DonatoreController {
     @RequestMapping(value ={"/home/nuova-analisi"} , method = RequestMethod.POST)
     public ModelAndView confermaPrenotazione(@Valid Prenotazioni prenotazioni,BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
-        if (prenotazioniService.prenotazioneEffettuata(getUserInfo().getId())){
+        if (prenotazioniService.prenotazioneEffettuata(userr.getId())){
             bindingResult.rejectValue("user_id", "error.prenotazioni", "Hai raggiunto il numero massimo di prenotazioni");
         }else
         if (prenotazioni.getData() == null || prenotazioni.getData().equals("")){
@@ -114,7 +114,7 @@ public class DonatoreController {
         if(bindingResult.hasErrors()) {
             model.setViewName("home/nuova-analisi");
         }else {
-            prenotazioniService.savePrenotazione(prenotazioni,getUserInfo().getId(),getUserInfo().getNome(),getUserInfo().getCognome());
+            prenotazioniService.savePrenotazione(prenotazioni,userr.getId(),userr.getNome(),userr.getCognome());
             model.addObject("prenotazioni", new Prenotazioni());
             model.addObject("msg", "Prenotazione Effettuata con Successo!");
             model.setViewName("home/nuova-analisi");

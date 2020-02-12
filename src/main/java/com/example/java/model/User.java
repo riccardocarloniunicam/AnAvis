@@ -1,5 +1,8 @@
 package com.example.java.model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+@Scope("singleton")
+@Component("user")
 @Entity
 @Table(name = "user")
 public class User {

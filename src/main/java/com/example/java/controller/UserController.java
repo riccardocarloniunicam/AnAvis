@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import com.example.java.model.*;
 import com.example.java.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -36,17 +38,39 @@ public class UserController  {
     @Autowired
     private ModuloService moduloService;
 
+    @Qualifier("user")
+    @Autowired
+    private User userr;
+
+public  User getUserr(){
+    return userr;
+}
+//Riempte l'oggetto user.
+    public User fillInfo(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u = userService.findUserByEmail(auth.getName());
+        userr.setId(u.getId());
+        userr.setNome(u.getNome());
+        userr.setCognome(u.getCognome());
+        userr.setEmail(u.getEmail());
+        userr.setCf(u.getCf());
+        userr.setIndirizzo(u.getIndirizzo());
+        userr.setCitta(u.getCitta());
+        userr.setProvincia(u.getProvincia());
+        userr.setCap(u.getCap());
+        userr.setTelefono(u.getTelefono());
+        userr.setTipo_documento(u.getTipo_documento());
+        userr.setNumerodoc(u.getNumerodoc());
+        userr.setGrupposanguinio(u.getGrupposanguinio());
+        userr.setDonatore(u.getDonatore());
+        userr.setEmail(u.getEmail());
+        userr.setModulo(u.getModulo());
+        return userr;
+    }
 
     @Autowired
     private NewsService newsService;
     private NewsService news;
-
-
-    public User getUserInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userService.findUserByEmail(auth.getName());
-    }
-
 
 
     @RequestMapping(value= {"/","/login"}, method=RequestMethod.GET)
@@ -80,7 +104,7 @@ public class UserController  {
         ModelAndView model = new ModelAndView();
         Modulo modulo = new Modulo(); //vuota
 
-        model.addObject("user",getUserInfo());
+        model.addObject("user",userr);
         model.addObject("modulo", modulo);
         model.setViewName("home/nuovo-modulo");
         return model;
@@ -90,7 +114,7 @@ public class UserController  {
     public ModelAndView check(@Valid Modulo modulo, BindingResult bindingResult){
         ModelAndView model = new ModelAndView();
 
-        if (moduloService.moduloEsiste(getUserInfo().getId())){
+        if (moduloService.moduloEsiste(userr.getId())){
             bindingResult.rejectValue("nome", "error.modulo", "Hai già inviato il modulo. Attendi la revisione degli amministratori per inviarne uno nuovo");
         }else
         if (!moduloService.checkInput(modulo)){
@@ -99,7 +123,7 @@ public class UserController  {
         if(bindingResult.hasErrors()) {
             model.setViewName("home/nuovo-modulo");
         }else {
-            moduloService.saveModulo(modulo,getUserInfo().getId());
+            moduloService.saveModulo(modulo,userr.getId());
             model.addObject("modulo", new Modulo());
             model.addObject("msg", "Prenotazione Effettuata con Successo!");
             model.setViewName("home/nuovo-modulo");
@@ -136,8 +160,9 @@ public class UserController  {
 
     @RequestMapping(value= {"/home/home"}, method=RequestMethod.GET)
     public ModelAndView home() {
+        fillInfo();
         ModelAndView model = new ModelAndView();
-        model.addObject("user",getUserInfo());
+        model.addObject("user",userr);
         model.setViewName("home/home");
         return model;
     }
@@ -146,13 +171,13 @@ public class UserController  {
     //Prendo i dati della persona che chiama il metodo.
     @RequestMapping(value = "home/profile", method = RequestMethod.GET)
     public String profile(Model model, HttpServletRequest request) {
-        return "redirect:/home/profile/" + getUserInfo().getNome();
+        return "redirect:/home/profile/" + userr.getNome();
     }
 
     //get the person and all his informations;
     @RequestMapping(value = "/home/profile/{name}", method = RequestMethod.GET)
     public String seeProfileTrue(@PathVariable(value="name")String personEmail,Model model, HttpServletRequest request) {
-        model.addAttribute("user",getUserInfo());
+        model.addAttribute("user",userr);
         return "home/profile";
     }
 
