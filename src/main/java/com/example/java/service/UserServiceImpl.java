@@ -90,4 +90,9 @@ public class UserServiceImpl implements UserService {
     public Integer downGradeParamModulo(Integer id) {
         return userRepository.DownGrandeParametroModulo(id);
     }
+
+    @Override
+    public List<User> findUserOfPrenotazione(String email) {
+        return userRepository.retriveUserAppuntamento(email);
+    }
 }

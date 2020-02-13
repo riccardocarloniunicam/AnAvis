@@ -37,6 +37,7 @@
             <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
             <a sec:authorize="hasAnyAuthority('USER','DONATORE')" th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
             <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/prenotazioni}" class="list-group-item list-group-item-action bg-light">Le tue Prenotazioni</a>
+            <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/news}" class="list-group-item list-group-item-action bg-light">News Sedi</a>
             <a th:href="@{/logout}" class="list-group-item list-group-item-action bg-light">Esci</a>
         </div>
     </div>

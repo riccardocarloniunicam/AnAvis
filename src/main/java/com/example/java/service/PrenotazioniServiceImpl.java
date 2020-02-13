@@ -23,7 +23,8 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     }
 
     @Override
-    public void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome) {
+    public void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome,String email) {
+        prenotazioni.setEmail(email);
         prenotazioni.setUser_id(user_id);
         prenotazioni.setNome(nome);
         prenotazioni.setCognome(cognome);
@@ -67,5 +68,10 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     @Override
     public void delete(Integer id) {
         prenotazioniRepository.deletePrenotazione(id);
+    }
+
+    @Override
+    public List<Prenotazioni> appuntamentiInSede(String email) {
+        return prenotazioniRepository.retriveAppuntamentiPerSede(email);
     }
 }

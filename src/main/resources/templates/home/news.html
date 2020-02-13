@@ -9,17 +9,42 @@
     <title>Home</title>
     <link th:href="@{/css/simple-sidebar.css}" href="/css/simple-sidebar.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-    <link th:href="@{/css/profile.css}" href="/css/profile.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<script th:inline="javascript">
+    $(document).ready(function () {
 
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+
+    });
+</script>
+
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        $("#new-analisi").click(function(e) {
+            e.preventDefault();
+            $(window.location).attr('href','/home/nuova-analisi');
+        });
+        $("#new-modulo").click(function(e) {
+            e.preventDefault();
+            $(window.location).attr('href','/home/nuovo-modulo');
+        });
+
+
+    });
+</script>
 <div id="navbar">
 </div>
 
 
 <div class="d-flex" id="wrapper">
 
-    <!-- Sidebar -->
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-heading">  <p style="font-size: 15px;">Ciao <span sec:authentication="name"></span></p> </div>
@@ -32,7 +57,6 @@
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
-    <!-- /#sidebar--->
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -61,107 +85,57 @@
                 </ul>
             </div>
         </nav>
-
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-7 ">
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">  <h4 >La tua Prenotazione</h4></div>
-                        <div class="panel-body">
-
-                            <div class="box box-info">
-
-
-                                <div class="col-sm-6">
-
-
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr style="margin:5px 0 5px 0;">
-
-
-                                <div class="col-md-6">
-                                    <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
-                                    </div>
-                                </div>
-
-
-                                <div th:style="${prenotazione == 'null' ? 'display:none' : 'display:block'}" id="1">
-                                <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' ">
-
-                                </div>
-
-
-                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
-                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getNome()+' '+prenotazione.getCognome()} : 'empty string message') : '' "></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-
-
-                                <div class="col-sm-5 col-xs-6 tital " >Data e ora:</div><div class="col-sm-7 col-xs-6 ">
-                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getData()+' '+prenotazione.getOrario()} : 'empty string message') : '' "></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
-                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${sede.getRegione()+' '+sede.getCitta() +' '+sede.getCitta()} : 'empty string message') : '' "></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-
-
-                                <form  th:action="@{/home/cancella-prenotazione/}" method="get">
-                                    <button class="button" th:type="submit">Elimina prenotazione</button>
-                                </form>
-                                </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div></div></div></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-
-                        </div>
-
-
-                    </div>
-                </div>
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
             </div>
+        </div>
+
+
+        <!-----DONATORE--->
+        <div class="container"  sec:authorize="hasAuthority('DONATORE')">
+
+
+            <h2>NEWS DELLE SEDI</h2>
+            <div  id="news_sedi"></div>
+
+        </div>
+    </div>
 
 
 
+    <script th:inline="javascript">
+        var html="";
+        $.ajax({
+            url: "/getnews",
+            type: "GET",
+            success:function (data){
+                $.each(data, function(index, value) {
+                    html+="<div>"
+                    html+="<label style='color: green;font-size: 16px;'>Data: </label>"
+                    html+= "<span style='font-size: 13px;'>"+' '+" "+value.data+"</span>"
+                    html+="</div>"
+                    html+="<div>"
+                    html+="<label style='color: green;font-size: 16px;'>Titolo: </label>"
+                    html+= "<span> "+' '+"  "+value.titolo+"</span>"
+                    html+="</div>"
+                    html+="<div>"
+                    html+= "<p>"+value.messaggio+"</p>"
+                    html+="</div>"
+                    html+="<div>"
+                    html+= "<p style='font-size: 8px;color: darkgray'>"+value.email+"</p>"
+                    html+="</div>"
+                    html+="<hr>"
 
+                    $("#news_sedi").html(html)
+                });
 
+            },error: function (a,b,c) {
 
-
-
-
-
-        </div></div></div></div>
+            }
+        })
+    </script>
 </div>
-<!-- /#page-content-wrapper -->
 
-</div>
 <!-- /#wrapper -->
 
 <!-- Bootstrap core JavaScript -->
@@ -170,7 +144,7 @@
 <!-- Menu Toggle Script -->
 
 
-
+</body>
 
 
 

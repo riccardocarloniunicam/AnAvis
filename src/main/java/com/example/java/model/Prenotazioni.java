@@ -26,6 +26,9 @@ public class Prenotazioni {
     @Column(name = "stato")
     private String stato;
 
+    @Column(name = "email")
+    private String email;
+
 
     @Column(name = "sede_id")
     private int sede_id;
@@ -33,6 +36,13 @@ public class Prenotazioni {
     @Column(name = "user_id")
     private int user_id;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getStato() {
         return stato;

@@ -28,7 +28,7 @@
                 <a class="nav-link" th:href="@{/sede/approvazioni}">Approvazioni</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" th:href="@{/sede/prenotazioni}">Prenotazioni</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -50,6 +50,8 @@
 </nav>
 
 
+<div class="alert alert-success" role="alert" th:if="${eliminato}" th:utext="${eliminato}">
+</div>
 <div id="container">
     <h1>Welcome <span sec:authentication="name"></span> </h1>
 </div>

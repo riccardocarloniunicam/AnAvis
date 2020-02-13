@@ -52,6 +52,7 @@
             <a href="#" class="list-group-item list-group-item-action bg-light">Home</a>
             <a sec:authorize="hasAnyAuthority('USER','DONATORE')" th:href="@{/home/profile}" class="list-group-item list-group-item-action bg-light">Profilo</a>
             <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/prenotazioni}" class="list-group-item list-group-item-action bg-light">Le tue Prenotazioni</a>
+            <a sec:authorize="hasAuthority('DONATORE')" th:href="@{/home/news}" class="list-group-item list-group-item-action bg-light">News Sedi</a>
             <a th:href="@{/logout}" class="list-group-item list-group-item-action bg-light">Esci</a>
         </div>
     </div>
@@ -84,7 +85,10 @@
                 </ul>
             </div>
         </nav>
-
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+            </div>
+        </div>
 
         <div class="container"  sec:authorize="hasAuthority('USER')">
             <h2>Benvenuto <span th:text="${user.nome}"></span></h2>
@@ -97,10 +101,16 @@
             <p>Compila il modulo per essere autorizzato a donare   <i id="new-modulo" class="fa fa-plus"></i></p>
 
             </div>
+            <div sec:authorize="hasAuthority('USER')" th:style="${user.getDonatore() == 1 ? 'display:block' : 'display:none'}" id="5">
+                <h3 style="color: green">Complimenti! Il modulo è stato accettato, al prossimo login sarai un DONATORE AUTORIZZATO!</h3>
+
+            </div>
+            <div sec:authorize="hasAuthority('USER')" th:style="${user.getDonatore() == 1 ? 'display:none' : 'display:block'}" id="3">
             <div sec:authorize="hasAuthority('USER')" th:style="${user.getModulo() == 1 ? 'display:block' : 'display:none'}" id="2">
                 <h3 style="color: green">Complimenti! Modulo inviato, attendi la fase di revisione da parte delle sedi</h3>
                 <p>Riceverai una mail con l'esito della tua approvazione.<br>
                 In caso di esito negativo, reinvia il modulo o contatta la sede.</p>
+            </div>
             </div>
         </div>
 
@@ -115,7 +125,7 @@
             <p>Prenota nuova analisi   <i id="new-analisi" class="fa fa-plus"></i></p>
             <hr>
 
-    <h2>NEWS DELLE SEDI</h2>
+    <h2>MESSAGGI DALLE SEDI</h2>
             <div  id="news_sedi"></div>
 
         </div>
@@ -126,23 +136,23 @@
     <script th:inline="javascript">
         var html="";
         $.ajax({
-            url: "/getnews",
+            url: "/getmessaggi",
             type: "GET",
             success:function (data){
                 $.each(data, function(index, value) {
+                    html+="<div>"
+                    html+="<label style='color: red;font-size: 16px;'>NUOVO MESSAGGIO da:<span style='color: blackss'>"+' '+value.sede_email+"</span> </label>"
+                    html+="</div>"
                     html+="<div>"
                     html+="<label style='color: green;font-size: 16px;'>Data: </label>"
                     html+= "<span style='font-size: 13px;'>"+' '+" "+value.data+"</span>"
                     html+="</div>"
                     html+="<div>"
-                    html+="<label style='color: green;font-size: 16px;'>Titolo: </label>"
-                    html+= "<span> "+' '+"  "+value.titolo+"</span>"
+                    html+="<label style='color: green;font-size: 16px;'>Oggetto: </label>"
+                    html+= "<span> "+' '+"  "+value.oggetto+"</span>"
                     html+="</div>"
                     html+="<div>"
                     html+= "<p>"+value.messaggio+"</p>"
-                    html+="</div>"
-                    html+="<div>"
-                    html+= "<p style='margin-left: 150px;font-size: 8px;color: darkgray'>"+value.email+"</p>"
                     html+="</div>"
                     html+="<hr>"
 

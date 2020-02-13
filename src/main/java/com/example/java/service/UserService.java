@@ -28,6 +28,8 @@ public interface UserService {
 
      Integer downGradeParamModulo(Integer id);
 
+     List<User> findUserOfPrenotazione(String email);
+
 
 
 

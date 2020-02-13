@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.util.List;
@@ -91,12 +92,7 @@ public  User getUserr(){
 
 
 
-    @RequestMapping(value = {"/getnews"},method = RequestMethod.GET)
-    public ResponseEntity<Object> getNews(){
-        List<News> listaNews = newsService.listall();
-        return new ResponseEntity<>(listaNews, HttpStatus.OK);
 
-    }
 
 
     @RequestMapping(value= {"/home/nuovo-modulo"}, method=RequestMethod.GET)
@@ -111,7 +107,11 @@ public  User getUserr(){
     }
 
 
-    public ModelAndView check(@Valid Modulo modulo, BindingResult bindingResult){
+
+
+    @RequestMapping(value= {"/home/nuovo-modulo"}, method=RequestMethod.POST)
+    public String nuovoModulo(@Valid Modulo modulo, BindingResult bindingResult,RedirectAttributes redirectAttributes) throws InterruptedException {
+
         ModelAndView model = new ModelAndView();
 
         if (moduloService.moduloEsiste(userr.getId())){
@@ -121,22 +121,15 @@ public  User getUserr(){
             bindingResult.rejectValue("residenza", "error.modulo", "Per Favore completa tutti i campi");
         }
         if(bindingResult.hasErrors()) {
-            model.setViewName("home/nuovo-modulo");
+            return "redirect: /home/nuovo-modulo";
         }else {
             moduloService.saveModulo(modulo,userr.getId());
             model.addObject("modulo", new Modulo());
-            model.addObject("msg", "Prenotazione Effettuata con Successo!");
-            model.setViewName("home/nuovo-modulo");
+            redirectAttributes.addFlashAttribute("msg", "Stato dell'utente uppato con successo!");
 
         }
-        return model;
+        return "redirect:/home/home";
 
-    }
-
-    @RequestMapping(value= {"/home/nuovo-modulo"}, method=RequestMethod.POST)
-    public ModelAndView nuovoModulo(@Valid Modulo modulo, BindingResult bindingResult) throws InterruptedException {
-
-        return check(modulo,bindingResult);
     }
 
     @RequestMapping(value= {"/signup"}, method=RequestMethod.POST)

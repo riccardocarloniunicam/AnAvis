@@ -3,10 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <!----CSS---->
-    <link th:href="@{/css/inseriscinews.css}" href="/css/inseriscinews.css" rel="stylesheet" type="text/css" />
-
-
     <!-- Bootstrap CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -29,10 +25,10 @@
                 <a class="nav-link" th:href="@{/sede/home}">Home </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@{/sede/approvazioni}" >Approvazioni </a>
+                <a class="nav-link" th:href="@{/sede/approvazioni}">Approvazioni</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/sede/prenotazioni}">Prenotazioni</a>
+                <a class="nav-link" th:href="@{/sede/prenotazioni}">Prenotazioni <span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item dropdown">
@@ -40,7 +36,7 @@
                     Azioni
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Inserisci News <span class="sr-only">(current)</span></a>
+                    <a class="dropdown-item" th:href="@{/sede/inserisci-news}">Inserisci News</a>
                     <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
@@ -52,46 +48,66 @@
 
     </div>
 </nav>
-
-
 <div class="col-md-6">
-    <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
-    </div>
+
 </div>
+
 <div id="container">
-   <h1>Inserisci  una nuova news</h1>
 
-
-    <form th:action="@{/sede/inserisci-news}" method="post" th:object="${news}" >
-
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Titolo</span>
-                        </div>
-                        <input th:name="titolo" name="titolo" id="titolo" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                    </div>
-
-
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Inserisci il tuo messaggio...</span>
-                            </div>
-                            <textarea th:name="messaggio" id="messaggio" name="messaggio" class="form-control" aria-label="With textarea"></textarea>
-                        </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">email</th>
+                <th scope="col">Data</th>
+                <th scope="col">Orario</th>
+                <th scope="col">Stato</th>
+                <th scope="col">Eseguita</th>
+                <th scope="col">Cancella</th>
 
 
 
-                        <button type="submit" class="btn btn-success">Condividi</button>
+
+            </tr>
+            </thead>
 
 
-                </form>
-            </div><!-- Status Upload  -->
-        </div><!-- Widget Area -->
+            <tbody th:each="prenotazione : ${prenotazione}">
+            <tr>
+
+                <td th:name="id"  th:text="${prenotazione.id}"></td>
+                <td th:name="id"  th:text="${prenotazione.nome}"></td>
+                <td th:name="id"  th:text="${prenotazione.cognome}"></td>
+                <td th:name="id"  th:text="${prenotazione.email}"></td>
+                <td th:name="id"  th:text="${prenotazione.data}"></td>
+                <td th:name="id"  th:text="${prenotazione.orario}"></td>
+                <td th:name="id"  th:text="${prenotazione.stato}"></td>
+                <td>
+                    <form th:action="@{/getuserprenotazioni}" method="POST" >
+                        <input type="hidden" th:name="email" th:value="${prenotazione.email}">
+                        <button type="submit" class="btn btn-success">Info</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form th:action="@{/cancellaprenotazione}" method="POST" >
+                        <input type="hidden" th:name="sede_id" th:value="${prenotazione.sede_id}">
+                        <input type="hidden" th:name="email" th:value="${prenotazione.email}">
+                        <input type="hidden" th:name="id" th:value="${prenotazione.id}">
+                        <button type="submit" class="btn btn-danger">Cancella</button>
+                    </form>
+                </td>
+
+
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 
-</div>
 </div>
 
 

@@ -1,5 +1,6 @@
 package com.example.java.repository;
 
+import com.example.java.model.Prenotazioni;
 import com.example.java.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -42,6 +43,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer DownGrandeParametroModulo(Integer id);
 
 
+    //trova prenotazioni in una sede in base all'email e dati dell'utente
+    @Query(value = "select *  from prenotazioni inner join utente_sedi on (prenotazioni.sede_id = utente_sedi.sede_id) inner join user on (user.id=prenotazioni.user_id) and utente_sedi.email = ?1",nativeQuery = true)
+    List<User> retriveUserAppuntamento(String email);
 
 
 

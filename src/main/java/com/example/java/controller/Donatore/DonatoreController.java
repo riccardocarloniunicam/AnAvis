@@ -1,20 +1,16 @@
 package com.example.java.controller.Donatore;
 
 
-import com.example.java.model.User;
-import com.example.java.service.UserService;
+import com.example.java.model.*;
+import com.example.java.service.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.example.java.model.Modulo;
-import com.example.java.model.Prenotazioni;
-import com.example.java.model.Sede;
-import com.example.java.service.ModuloService;
-import com.example.java.service.PrenotazioniService;
-import com.example.java.service.SedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -46,7 +42,26 @@ public class DonatoreController {
     @Autowired
     private User userr;
 
+    @Autowired
+    private NewsService newsService;
 
+    @Autowired
+    private MessaggiService messaggiService;
+
+    @RequestMapping(value = {"/getmessaggi"},method = RequestMethod.GET)
+    public ResponseEntity<Object> getMessaggi(){
+        User user = userService.findUserByEmail(userr.getEmail());
+        List<Messaggi> messaggis = messaggiService.retriveMessById(user.getId());
+        return new ResponseEntity<>(messaggis, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = {"/getnews"},method = RequestMethod.GET)
+    public ResponseEntity<Object> getNews(){
+        List<News> listaNews = newsService.listall();
+        return new ResponseEntity<>(listaNews, HttpStatus.OK);
+
+    }
 
     @RequestMapping(value = "home/prenotazioni", method = RequestMethod.GET)
     public String prenotazioni(Model model,HttpServletRequest request) {
@@ -114,7 +129,7 @@ public class DonatoreController {
         if(bindingResult.hasErrors()) {
             model.setViewName("home/nuova-analisi");
         }else {
-            prenotazioniService.savePrenotazione(prenotazioni,userr.getId(),userr.getNome(),userr.getCognome());
+            prenotazioniService.savePrenotazione(prenotazioni,userr.getId(),userr.getNome(),userr.getCognome(),userr.getEmail());
             model.addObject("prenotazioni", new Prenotazioni());
             model.addObject("msg", "Prenotazione Effettuata con Successo!");
             model.setViewName("home/nuova-analisi");
@@ -122,6 +137,11 @@ public class DonatoreController {
 
         }
         return model;
+    }
+
+    @RequestMapping(value= {"/home/news"}, method=RequestMethod.GET)
+    public String news(){
+        return "home/news";
     }
 
 

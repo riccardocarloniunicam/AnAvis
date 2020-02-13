@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PrenotazioniService {
     List<Prenotazioni> listall();
-    void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome);
+    void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome,String email);
     List<Prenotazioni> findByorarioedata(String data, String orario,Integer sede_id);
 
     Boolean checkPrenotazione(String data,String orario,Integer sede_id);
@@ -20,5 +20,7 @@ public interface PrenotazioniService {
     Boolean prenotazioneEffettuata(Integer user_id);
 
     void delete(Integer id);
+    //retrive appuntamenti prenotati
+    List<Prenotazioni> appuntamentiInSede(String email);
 
 }
