@@ -37,28 +37,6 @@ public class SedeController {
     }
 
 
-    @RequestMapping(value = "/sede/inserisci-news",method = RequestMethod.GET)
-    public ModelAndView inserisciNews(){
-        ModelAndView model = new ModelAndView();
-        News news = new News();
-        model.addObject("news", news);
-        model.setViewName("sede/inserisci-news");
-        return model;
-    }
-
-    @RequestMapping(value= {"/sede/inserisci-news"}, method=RequestMethod.POST)
-    public ModelAndView nuovoModulo(@Valid News news, BindingResult bindingResult) throws InterruptedException {
-        ModelAndView model = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UtenteSedi utenteSedi = utenteSediService.findUserByEmail(auth.getName());
-
-        newsService.saveNews(news,utenteSedi.getId(),utenteSedi.getEmail());
-        model.addObject("msg", "News pubblicata correttamente");
-        model.addObject("news", new News());
-        model.setViewName("sede/inserisci-news");
-    return model;
-    }
-
 
 
 }
