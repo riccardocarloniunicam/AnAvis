@@ -41,7 +41,7 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
 
 
    //trova prenotazioni in una sede in base all'email e dati dell'utente
-   @Query(value = "select *  from prenotazioni inner join utente_sedi on (prenotazioni.sede_id = utente_sedi.sede_id) inner join user on (user.id=prenotazioni.user_id) and utente_sedi.email = ?1",nativeQuery = true)
+   @Query(value = "select *  from prenotazioni inner join utente_sedi on (prenotazioni.sede_id = utente_sedi.sede_id) inner join user on (user.id=prenotazioni.user_id) and utente_sedi.email = ?1 order by data ,orario desc",nativeQuery = true)
    List<Prenotazioni> retriveAppuntamentiPerSede(String email);
 
 

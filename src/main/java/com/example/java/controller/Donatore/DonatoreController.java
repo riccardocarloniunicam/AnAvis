@@ -48,20 +48,8 @@ public class DonatoreController {
     @Autowired
     private MessaggiService messaggiService;
 
-    @RequestMapping(value = {"/getmessaggi"},method = RequestMethod.GET)
-    public ResponseEntity<Object> getMessaggi(){
-        User user = userService.findUserByEmail(userr.getEmail());
-        List<Messaggi> messaggis = messaggiService.retriveMessById(user.getId());
-        return new ResponseEntity<>(messaggis, HttpStatus.OK);
 
-    }
 
-    @RequestMapping(value = {"/getnews"},method = RequestMethod.GET)
-    public ResponseEntity<Object> getNews(){
-        List<News> listaNews = newsService.listall();
-        return new ResponseEntity<>(listaNews, HttpStatus.OK);
-
-    }
 
     @RequestMapping(value = "home/prenotazioni", method = RequestMethod.GET)
     public String prenotazioni(Model model,HttpServletRequest request) {
