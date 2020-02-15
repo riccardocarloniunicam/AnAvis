@@ -30,11 +30,6 @@ public class SignupController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SedeService sedeService;
-
-    @Autowired
-    private PrenotazioniService prenotazioniService;
 
     @Autowired
     private ModuloService moduloService;

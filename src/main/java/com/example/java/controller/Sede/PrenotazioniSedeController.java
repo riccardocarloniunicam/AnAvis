@@ -47,7 +47,7 @@ public class PrenotazioniSedeController {
     }
 
     @RequestMapping(value = "/sede/prenotazioni/{email}", method = RequestMethod.GET)
-    public String seeProfileTrue(@PathVariable(value="email")String email, Model model, HttpServletRequest request) {
+    public String getPrenotazioniInSede(@PathVariable(value="email")String email, Model model, HttpServletRequest request) {
       //  List<User> user = userService.findUserOfPrenotazione(email);
         List<Prenotazioni> prenotazione = prenotazioniService.appuntamentiInSede(email);
         model.addAttribute("prenotazione",prenotazione);

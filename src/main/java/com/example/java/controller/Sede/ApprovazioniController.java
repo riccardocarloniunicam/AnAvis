@@ -32,7 +32,7 @@ public class ApprovazioniController {
     private UtenteSediService utenteSediService;
 
     @RequestMapping(value = "sede/approvazioni")
-    public ModelAndView approvazioni(){
+    public ModelAndView getApprovazioniList(){
         ModelAndView model = new ModelAndView();
         List<User> user = userService.findToApprove();
         model.addObject("user",user);

@@ -34,7 +34,7 @@ public class NewsController {
     }
 
     @RequestMapping(value= {"/sede/inserisci-news"}, method=RequestMethod.POST)
-    public ModelAndView nuovoModulo(@Valid News news, BindingResult bindingResult) throws InterruptedException {
+    public ModelAndView insertNews(@Valid News news, BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UtenteSedi utenteSedi = utenteSediService.findUserByEmail(auth.getName());
