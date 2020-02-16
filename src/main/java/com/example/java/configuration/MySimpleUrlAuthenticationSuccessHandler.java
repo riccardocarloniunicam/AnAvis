@@ -1,6 +1,9 @@
 package com.example.java.configuration;
 
+import com.example.java.model.UtenteSedi;
+import com.example.java.service.UtenteSediService;
 import org.apache.juli.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -19,6 +22,25 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+
+    @Autowired
+    private UtenteSedi utenteSedi;
+
+    @Autowired
+    private UtenteSediService utenteSediService;
+    public  UtenteSedi getUtenteSedi(){
+        return utenteSedi;
+    }
+    public UtenteSedi fillInfo(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UtenteSedi u = utenteSediService.findUserByEmail(auth.getName());
+        utenteSedi.setEmail(u.getEmail());
+        utenteSedi.setId(u.getId());
+        utenteSedi.setSede_id(u.getSede_id());
+        return utenteSedi;
+    }
+
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -40,6 +62,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
                 break;
             }else if (grantedAuthority.getAuthority().equals("SEDE")){
                 hasSedeRole = true;
+                fillInfo();
                 break;
             }
         }

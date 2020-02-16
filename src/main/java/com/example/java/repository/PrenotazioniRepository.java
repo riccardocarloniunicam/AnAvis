@@ -45,4 +45,7 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    List<Prenotazioni> retriveAppuntamentiPerSede(String email);
 
 
+
+   @Query(value = "SELECT count(*) FROM prenotazioni WHERE stato = 'PRENOTATA' and sede_id =?1",nativeQuery = true)
+   Integer retrivePrenotazioniCount(Integer sede_id);
 }

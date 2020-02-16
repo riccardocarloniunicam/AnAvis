@@ -23,4 +23,7 @@ public interface PrenotazioniService {
     //retrive appuntamenti prenotati
     List<Prenotazioni> appuntamentiInSede(String email);
 
+    //retrive prenotazioni nella sede con stato "prenotata"
+    Integer getCountPrenotazioni(Integer sede_id);
+
 }

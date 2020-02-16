@@ -28,7 +28,7 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
         prenotazioni.setUser_id(user_id);
         prenotazioni.setNome(nome);
         prenotazioni.setCognome(cognome);
-        prenotazioni.setStato("Prenotata");
+        prenotazioni.setStato("PRENOTATA");
         prenotazioniRepository.save(prenotazioni);
     }
 
@@ -73,5 +73,10 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     @Override
     public List<Prenotazioni> appuntamentiInSede(String email) {
         return prenotazioniRepository.retriveAppuntamentiPerSede(email);
+    }
+
+    @Override
+    public Integer getCountPrenotazioni(Integer sede_id) {
+        return prenotazioniRepository.retrivePrenotazioniCount(sede_id);
     }
 }

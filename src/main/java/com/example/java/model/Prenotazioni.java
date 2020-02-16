@@ -31,7 +31,7 @@ public class Prenotazioni {
 
 
     @Column(name = "sede_id")
-    private int sede_id;
+    private Integer sede_id;
 
     @Column(name = "user_id")
     private int user_id;
@@ -92,11 +92,11 @@ public class Prenotazioni {
         this.orario = orario;
     }
 
-    public int getSede_id() {
+    public Integer getSede_id() {
         return sede_id;
     }
 
-    public void setSede_id(int sede_id) {
+    public void setSede_id(Integer sede_id) {
         this.sede_id = sede_id;
     }
 

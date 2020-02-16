@@ -1,9 +1,13 @@
 package com.example.java.model;
 
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.Set;
-
+@Scope("singleton")
+@Component("utente_sede")
 @Entity
 @Table(name = "utente_sedi")
 public class UtenteSedi {
