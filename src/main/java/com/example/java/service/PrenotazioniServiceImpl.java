@@ -29,6 +29,7 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
         prenotazioni.setNome(nome);
         prenotazioni.setCognome(cognome);
         prenotazioni.setStato("PRENOTATA");
+        prenotazioni.setAnalisi(0);
         prenotazioniRepository.save(prenotazioni);
     }
 
@@ -78,5 +79,40 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     @Override
     public Integer getCountPrenotazioni(Integer sede_id) {
         return prenotazioniRepository.retrivePrenotazioniCount(sede_id);
+    }
+
+    @Override
+    public Integer updateState(Integer id) {
+        return prenotazioniRepository.updateStato(id);
+    }
+
+    @Override
+    public Integer retriveEseguite(Integer id) {
+        return prenotazioniRepository.retrivePrenotazioniCountEseguite(id);
+    }
+
+    @Override
+    public List<Prenotazioni> appuntamentiInSedeEseguiti(String email) {
+        return prenotazioniRepository.retriveAppuntamentiPerSedeEseguiti(email);
+    }
+
+    @Override
+    public Integer analisiDaCaricare(Integer id) {
+        return prenotazioniRepository.analisiDaCaricare(id);
+    }
+
+    @Override
+    public List<Prenotazioni> findLike(String email,Integer sede_id) {
+        return prenotazioniRepository.findByNameLike(email,sede_id);
+    }
+
+    @Override
+    public List<Prenotazioni> listAll() {
+        return prenotazioniRepository.findAll();
+    }
+
+    @Override
+    public List<Prenotazioni> findByNome(String nome) {
+        return prenotazioniRepository.findByNome(nome);
     }
 }

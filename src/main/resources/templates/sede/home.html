@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Material Dashboard by Creative Tim
+        Dashboard
     </title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
@@ -26,7 +26,6 @@
 
 </head>
 <body>
-body class="">
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
         <!--
@@ -65,6 +64,13 @@ body class="">
                     </a>
                 </li>
 
+                <li class="nav-item ">
+                    <a class="nav-link" th:href="@{/sede/prenotazioni-eseguite}">
+                        <i class="material-icons">assignment</i>
+                        <p>Eseguite</p>
+                    </a>
+                </li>
+
 
             </ul>
         </div>
@@ -74,7 +80,12 @@ body class="">
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:;">Dashboard</a>
+                    <a class="navbar-brand">Dashboard</a>
+                    <div class="col-md-6">
+                        <div class="alert alert-success" role="alert" th:if="${eseguita}" th:utext="${eseguita}">
+                        </div>
+                    </div>
+
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
@@ -173,12 +184,13 @@ body class="">
                                 <div class="card-icon">
                                     <i class="material-icons">store</i>
                                 </div>
-                                <p class="card-category">Revenue</p>
-                                <h3 class="card-title">$34,245</h3>
+                                <p class="card-category">Eseguite</p>
+                                <h3 th:text="${eseguite}" class="card-title"></h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons">date_range</i> Last 24 Hours
+                                    <i class="material-icons">date_range</i>
+                                    <a th:href="@{/sede/prenotazioni-eseguite}">Vedi Tutte</a>
                                 </div>
                             </div>
                         </div>
@@ -189,12 +201,12 @@ body class="">
                                 <div class="card-icon">
                                     <i class="material-icons">info_outline</i>
                                 </div>
-                                <p class="card-category">Fixed Issues</p>
-                                <h3 class="card-title">75</h3>
+                                <p class="card-category">Analisi da inviare</p>
+                                <h3 th:text="${dacaricare}" class="card-title"></h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons">local_offer</i> Tracked from Github
+
                                 </div>
                             </div>
                         </div>
@@ -366,7 +378,7 @@ body class="">
         <script src="../assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script src="../assets/demo/demo.js"></script>
-        <script>
+        <script th:inline="javascript">
             $(document).ready(function() {
                 $().ready(function() {
                     $sidebar = $('.sidebar');
@@ -537,7 +549,7 @@ body class="">
                 });
             });
         </script>
-        <script>
+        <script th:inline="javascript">
             $(document).ready(function() {
                 // Javascript method's body can be found in assets/js/demos.js
                 md.initDashboardPageCharts();

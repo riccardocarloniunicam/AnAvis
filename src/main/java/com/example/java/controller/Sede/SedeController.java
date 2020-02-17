@@ -42,6 +42,8 @@ public class SedeController {
         ModelAndView model = new ModelAndView();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addObject("prenotazioni",prenotazioniService.getCountPrenotazioni(utenteSedi.getSede_id()));
+        model.addObject("eseguite",prenotazioniService.retriveEseguite(utenteSedi.getSede_id()));
+        model.addObject("dacaricare",prenotazioniService.analisiDaCaricare(utenteSedi.getSede_id()));
         model.setViewName("sede/home");
         return model;
     }

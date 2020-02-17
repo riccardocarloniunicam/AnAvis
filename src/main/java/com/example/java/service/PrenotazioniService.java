@@ -11,7 +11,8 @@ public interface PrenotazioniService {
     List<Prenotazioni> listall();
     void savePrenotazione(Prenotazioni prenotazioni,Integer user_id,String nome,String cognome,String email);
     List<Prenotazioni> findByorarioedata(String data, String orario,Integer sede_id);
-
+ List<Prenotazioni> listAll();
+ List<Prenotazioni> findByNome(String nome);
     Boolean checkPrenotazione(String data,String orario,Integer sede_id);
 
     Prenotazioni getPrenotazioni(Integer id);
@@ -23,7 +24,15 @@ public interface PrenotazioniService {
     //retrive appuntamenti prenotati
     List<Prenotazioni> appuntamentiInSede(String email);
 
+    List<Prenotazioni> appuntamentiInSedeEseguiti(String email);
+
     //retrive prenotazioni nella sede con stato "prenotata"
     Integer getCountPrenotazioni(Integer sede_id);
+
+    Integer updateState(Integer id);
+    Integer retriveEseguite(Integer id);
+    Integer analisiDaCaricare(Integer id); //Analisi da caricare
+
+    List<Prenotazioni> findLike(String email,Integer sede_id);
 
 }

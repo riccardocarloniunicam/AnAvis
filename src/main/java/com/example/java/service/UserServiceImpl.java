@@ -94,5 +94,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findUserOfPrenotazione(String email) {
         return userRepository.retriveUserAppuntamento(email);
+
     }
+
+
 }

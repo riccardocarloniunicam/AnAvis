@@ -36,13 +36,27 @@ public class NewsController {
     @RequestMapping(value= {"/sede/inserisci-news"}, method=RequestMethod.POST)
     public ModelAndView insertNews(@Valid News news, BindingResult bindingResult) throws InterruptedException {
         ModelAndView model = new ModelAndView();
+        if (news.getTitolo().equals("")) {
+            bindingResult.rejectValue("titolo", "error.news", "Per favore inserisci un titolo");
+        }
+        if (news.getMessaggio().equals("")) {
+            bindingResult.rejectValue("messaggio", "error.news", "Per favore inserisci un messaggio");
+        }
+        if (bindingResult.hasErrors()) {
+            model.setViewName("/sede/inserisci-news");
+        } else {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UtenteSedi utenteSedi = utenteSediService.findUserByEmail(auth.getName());
 
-        newsService.saveNews(news,utenteSedi.getId(),utenteSedi.getEmail());
+        newsService.saveNews(news, utenteSedi.getId(), utenteSedi.getEmail());
         model.addObject("msg", "News pubblicata correttamente");
         model.addObject("news", new News());
         model.setViewName("sede/inserisci-news");
+    }
+
+
+
         return model;
     }
 }

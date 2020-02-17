@@ -51,7 +51,7 @@ public class PrenotazioniSedeController {
       //  List<User> user = userService.findUserOfPrenotazione(email);
         List<Prenotazioni> prenotazione = prenotazioniService.appuntamentiInSede(email);
         model.addAttribute("prenotazione",prenotazione);
-        return "sede/prenotazioni";
+        return "/sede/prenotazioni";
     }
 
 
@@ -95,6 +95,13 @@ public class PrenotazioniSedeController {
         prenotazioniService.delete(user.getId());
         redirectAttributes.addFlashAttribute("eliminato","Prenotazione eliminata correttamente");
         return "redirect:/sede/home";
+    }
+
+    @RequestMapping(value = "/eseguita",method = RequestMethod.POST)
+    public String eseguita(@Valid Prenotazioni prenotazioni,RedirectAttributes redirectAttributes){
+        prenotazioniService.updateState(prenotazioni.getId());
+        redirectAttributes.addFlashAttribute("eseguita","Prenotazione eseguita con successo");
+        return "redirect:sede/home";
     }
 
 

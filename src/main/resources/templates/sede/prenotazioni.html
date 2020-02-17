@@ -149,6 +149,7 @@ body class="">
                     </div>
                 </div>
 
+
                 <div class="col-md-6">
                     <div class="alert alert-danger" role="alert" th:if="${delete}" th:utext="${delete}">
                     </div>
@@ -226,9 +227,10 @@ body class="">
                                             </td>
 
                                             <td>
-                                                <form th:action="@{/}" method="POST" >
+                                                <form th:action="@{/eseguita}" method="POST" >
 
                                                     <button type="submit" class="btn btn-success">Eseguita</button>
+                                                    <input type="hidden" th:name="id" th:value="${prenotazione.id}">
                                                 </form>
                                             </td>
 

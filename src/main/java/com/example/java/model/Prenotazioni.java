@@ -35,6 +35,16 @@ public class Prenotazioni {
 
     @Column(name = "user_id")
     private int user_id;
+    @Column(name = "analisi")
+    private int analisi;
+
+    public int getAnalisi() {
+        return analisi;
+    }
+
+    public void setAnalisi(int analisi) {
+        this.analisi = analisi;
+    }
 
     public String getEmail() {
         return email;

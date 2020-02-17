@@ -145,6 +145,12 @@ body class="">
                         <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
                         </div>
                     </div>
+
+
+
+
+
+
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header card-header-primary">
@@ -159,7 +165,9 @@ body class="">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Titolo</label>
-                                                <input  type="text" class="form-control">
+                                                <input th:id="titolo" th:name="titolo"  type="text" class="form-control">
+                                                <span class="text-danger align-middle" th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}">
+                         </span>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +178,9 @@ body class="">
                                                 <label>Messaggio</label>
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating"> Inserisci un messaggio...</label>
-                                                    <textarea class="form-control" rows="5"></textarea>
+                                                    <textarea th:id="messaggio" th:name="messaggio" class="form-control" rows="5"></textarea>
+                                                    <span class="text-danger align-middle" th:if="${#fields.hasErrors('messaggio')}" th:errors="*{messaggio}">
+                         </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +201,7 @@ body class="">
             <div class="container-fluid">
 
                 <div class="copyright float-right">
-                  
+
 
 
                 </div>

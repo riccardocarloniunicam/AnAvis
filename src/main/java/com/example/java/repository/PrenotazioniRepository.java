@@ -22,8 +22,11 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    Integer prenotazioneExist(String data,String orario,Integer sede_id);
 
 
+   @Query(value = "SELECT * FROM prenotazioni WHERE nome=?1",nativeQuery = true)
+   List<Prenotazioni> findByNome(String nome);
 
-   @Query(value = "SELECT * FROM prenotazioni WHERE user_id=?1",nativeQuery = true)
+
+   @Query(value = "SELECT * FROM prenotazioni WHERE user_id=?1 and stato='PRENOTATA'",nativeQuery = true)
    Prenotazioni findPrenotazioneByUserID(Integer id);
 
 
@@ -32,7 +35,7 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    Prenotazioni findPrenotazioneById(Integer id);
 
    //vede se l'utente ha già effettuato la sua prenotazione
-   @Query(value = "SELECT count(*) FROM prenotazioni where user_id = ?1",nativeQuery = true)
+   @Query(value = "SELECT count(*) FROM prenotazioni where user_id = ?1 and stato='PRENOTATA'",nativeQuery = true)
    Integer prenotazioneGiaEffettuata(Integer user_id);
 
    @Modifying
@@ -41,11 +44,35 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
 
 
    //trova prenotazioni in una sede in base all'email e dati dell'utente
-   @Query(value = "select *  from prenotazioni inner join utente_sedi on (prenotazioni.sede_id = utente_sedi.sede_id) inner join user on (user.id=prenotazioni.user_id) and utente_sedi.email = ?1 order by data ,orario desc",nativeQuery = true)
+   @Query(value = "select *  from prenotazioni inner join utente_sedi on (prenotazioni.sede_id = utente_sedi.sede_id) inner join user on (user.id=prenotazioni.user_id) and utente_sedi.email = ?1 and prenotazioni.stato ='PRENOTATA' order by data ,orario desc",nativeQuery = true)
    List<Prenotazioni> retriveAppuntamentiPerSede(String email);
+
+   @Query(value = "select *  from prenotazioni inner join utente_sedi on (prenotazioni.sede_id = utente_sedi.sede_id) inner join user on (user.id=prenotazioni.user_id) and utente_sedi.email = ?1 and prenotazioni.stato ='ESEGUITA' order by data ,orario desc",nativeQuery = true)
+   List<Prenotazioni> retriveAppuntamentiPerSedeEseguiti(String email);
+
+
 
 
 
    @Query(value = "SELECT count(*) FROM prenotazioni WHERE stato = 'PRENOTATA' and sede_id =?1",nativeQuery = true)
    Integer retrivePrenotazioniCount(Integer sede_id);
+
+
+   @Query(value = "SELECT count(*) FROM prenotazioni WHERE stato = 'ESEGUITA' and sede_id =?1",nativeQuery = true)
+   Integer retrivePrenotazioniCountEseguite(Integer sede_id);
+
+   @Query(value = "SELECT count(*) FROM prenotazioni WHERE stato = 'ESEGUITA' and analisi = 0 and sede_id =?1",nativeQuery = true)
+   Integer analisiDaCaricare(Integer sede_id);
+
+
+
+   @Modifying
+   @Query(value = "update prenotazioni set stato = 'ESEGUITA' where id =?1",nativeQuery = true)
+   Integer updateStato(Integer id);
+
+
+   @Query(value = "SELECT * FROM prenotazioni WHERE nome LIKE %?1% and stato ='ESEGUITA' and sede_id=?2",nativeQuery = true)
+   List<Prenotazioni> findByNameLike(String name,Integer sede_id);
+
+
 }
