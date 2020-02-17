@@ -30,7 +30,7 @@ public interface UserService {
 
      List<User> findUserOfPrenotazione(String email);
 
-
+     Integer findNumberToapprove(); //trova count degli utenti in attesa di approvazione
 
 
 

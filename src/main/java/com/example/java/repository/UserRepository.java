@@ -21,6 +21,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from user  inner join user_role  on (user.id = user_role.user_id) inner join modulo on (user.id = modulo.user_id) and role_id=2",nativeQuery = true)
     List<User> findAllToApprove();
 
+    @Query(value = "select count(*) from user  inner join user_role  on (user.id = user_role.user_id) inner join modulo on (user.id = modulo.user_id) and role_id=2",nativeQuery = true)
+    Integer findNumberToApprove();
+
+
 
     // PRENDI TUTTO USER E MODULO DELLO STESSO UTENTE
     @Query(value = "select * from user inner join modulo on (user.id = modulo.user_id) and user.id = ?1",nativeQuery = true)

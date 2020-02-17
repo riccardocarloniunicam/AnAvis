@@ -29,6 +29,7 @@ public class SedeController {
     private UtenteSediService utenteSediService;
     @Autowired
     private PrenotazioniService prenotazioniService;
+    @Autowired UserService userService;
 
 
     @Qualifier("utente_sede")
@@ -40,10 +41,10 @@ public class SedeController {
     @RequestMapping(value= {"/sede/home"}, method= RequestMethod.GET)
     public ModelAndView sede() {
         ModelAndView model = new ModelAndView();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addObject("prenotazioni",prenotazioniService.getCountPrenotazioni(utenteSedi.getSede_id()));
         model.addObject("eseguite",prenotazioniService.retriveEseguite(utenteSedi.getSede_id()));
         model.addObject("dacaricare",prenotazioniService.analisiDaCaricare(utenteSedi.getSede_id()));
+        model.addObject("daapprovare",userService.findNumberToapprove());
         model.setViewName("sede/home");
         return model;
     }
