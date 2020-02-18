@@ -35,4 +35,6 @@ public interface PrenotazioniService {
 
     List<Prenotazioni> findLike(String email,Integer sede_id);
 
+    Integer updateAnalisiParamentro(Integer id); //mette analisi a 1
+
 }

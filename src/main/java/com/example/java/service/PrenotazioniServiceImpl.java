@@ -115,4 +115,9 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     public List<Prenotazioni> findByNome(String nome) {
         return prenotazioniRepository.findByNome(nome);
     }
+
+    @Override
+    public Integer updateAnalisiParamentro(Integer id) {
+        return prenotazioniRepository.updateParametroAnalisi(id);
+    }
 }

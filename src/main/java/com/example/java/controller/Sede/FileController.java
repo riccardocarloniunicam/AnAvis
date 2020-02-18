@@ -3,6 +3,7 @@ package com.example.java.controller.Sede;
 import com.example.java.model.DBFile;
 import com.example.java.payload.UploadFileResponse;
 import com.example.java.service.DBFileStorageService;
+import com.example.java.service.PrenotazioniService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,18 @@ public class FileController {
 
     @Autowired
     private DBFileStorageService dbFileStorageService;
+    @Autowired
+    private PrenotazioniService prenotazioniService;
 
 
 
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("user_id") Integer user_id,@RequestParam("prenotazione_id")Integer prenotazione_id) {
+        //metti la prenotazione eseguita
 
         DBFile dbFile = dbFileStorageService.storeFile(file,user_id,prenotazione_id);
-
+        prenotazioniService.updateAnalisiParamentro(prenotazione_id);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
