@@ -70,8 +70,8 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    @Query(value = "update prenotazioni set stato = 'ESEGUITA' where id =?1",nativeQuery = true)
    Integer updateStato(Integer id);
 
-
-   @Query(value = "SELECT * FROM prenotazioni WHERE nome LIKE %?1% and stato ='ESEGUITA' and sede_id=?2",nativeQuery = true)
+   //Funzione di ricerca per nome
+   @Query(value = "SELECT * FROM prenotazioni WHERE nome LIKE %?1%  and stato ='ESEGUITA' and sede_id=?2 order by cognome,data",nativeQuery = true)
    List<Prenotazioni> findByNameLike(String name,Integer sede_id);
 
 

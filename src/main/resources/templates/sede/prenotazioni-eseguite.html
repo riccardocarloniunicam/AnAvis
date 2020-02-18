@@ -93,7 +93,9 @@ body class="">
                     <form class="navbar-form" th:action="@{/sede/prenotazioni-eseguite}">
                         <div class="input-group no-border">
 
-                            <input type="text" th:name="nome" value="" class="form-control" placeholder="Search...">
+                            <input type="text" th:name="nome"  value="" class="form-control" placeholder="Search...">
+
+
                             <button type="submit"  class="btn btn-white btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -222,10 +224,11 @@ body class="">
 
 
                                             <td>
-                                                <form th:action="@{/eseguita}" method="POST" >
+                                                <form th:action="@{/inserisci_analisi}" method="POST" >
 
                                                     <button type="submit" class="btn btn-success">Carica</button>
                                                     <input type="hidden" th:name="id" th:value="${prenotazione.id}">
+                                                    <input type="hidden" th:name="user_id" th:value="${prenotazione.user_id}">
                                                 </form>
                                             </td>
 
