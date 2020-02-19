@@ -1,6 +1,10 @@
 package com.example.java.controller.Utente;
 
+import com.example.java.model.Analisi;
+import com.example.java.model.Prenotazioni;
 import com.example.java.model.User;
+import com.example.java.service.AnalisiService;
+import com.example.java.service.PrenotazioniService;
 import com.example.java.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
 
@@ -20,6 +26,8 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+
 
 
     public  User getUserr(){

@@ -50,17 +50,14 @@ private AnalisiService analisiService;
     }
 
 
-    @RequestMapping(value = {"/home/report"},method = RequestMethod.GET)
-    public ModelAndView reportVisiteAnalisi(){
-        ModelAndView modelAndView = new ModelAndView();
-        List<Analisi> analisi = analisiService.findbyuserID(userr.getId());
-        List<Prenotazioni> prenotazioni = prenotazioniService.findByNome(userr.getNome());
-        modelAndView.addObject("analisi",analisi);
-        modelAndView.addObject("user",userr);
-        modelAndView.setViewName("home/report");
-        return modelAndView;
 
+    @RequestMapping(value= {"/home/news"}, method= RequestMethod.GET)
+    public String news(){
+        return "home/news";
     }
+
+
+
 }
 
 
