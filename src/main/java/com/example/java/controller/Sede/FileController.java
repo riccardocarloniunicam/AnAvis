@@ -1,7 +1,9 @@
 package com.example.java.controller.Sede;
 
+import com.example.java.model.Analisi;
 import com.example.java.model.DBFile;
 import com.example.java.payload.UploadFileResponse;
+import com.example.java.service.AnalisiService;
 import com.example.java.service.DBFileStorageService;
 import com.example.java.service.PrenotazioniService;
 import org.slf4j.Logger;
@@ -30,6 +32,8 @@ public class FileController {
     private DBFileStorageService dbFileStorageService;
     @Autowired
     private PrenotazioniService prenotazioniService;
+    @Autowired
+    private AnalisiService analisiService;
 
 
 
@@ -37,6 +41,7 @@ public class FileController {
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("user_id") Integer user_id,@RequestParam("prenotazione_id")Integer prenotazione_id) {
         //metti la prenotazione eseguita
+        //INSERT INTO ANALISI user_id file download, prenotazione id;
 
         DBFile dbFile = dbFileStorageService.storeFile(file,user_id,prenotazione_id);
         prenotazioniService.updateAnalisiParamentro(prenotazione_id);
@@ -45,6 +50,13 @@ public class FileController {
                 .path("/downloadFile/")
                 .path(dbFile.getId())
                 .toUriString();
+
+        Analisi analisi = new Analisi();
+        analisi.setUser_id(user_id);
+        analisi.setPrenotazione_id(prenotazione_id);
+        analisi.setDownload_path(fileDownloadUri);
+        analisiService.saveAnalisi(analisi);
+
 
         return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri,
                 file.getContentType(), file.getSize());

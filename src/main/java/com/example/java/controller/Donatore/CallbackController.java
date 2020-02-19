@@ -1,18 +1,16 @@
 package com.example.java.controller.Donatore;
 
 
-import com.example.java.model.Messaggi;
-import com.example.java.model.News;
-import com.example.java.model.User;
-import com.example.java.service.MessaggiService;
-import com.example.java.service.NewsService;
-import com.example.java.service.UserService;
+import com.example.java.model.*;
+import com.example.java.repository.DBFileRepository;
+import com.example.java.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -28,6 +26,11 @@ private UserService userService;
 private MessaggiService messaggiService;
 @Autowired
 private NewsService newsService;
+@Autowired
+    private PrenotazioniService prenotazioniService;
+@Autowired
+private AnalisiService analisiService;
+
 
     @RequestMapping(value = {"/getmessaggi"},method = RequestMethod.GET)
     public ResponseEntity<Object> getMessaggi(){
@@ -43,6 +46,19 @@ private NewsService newsService;
     public ResponseEntity<Object> getNews(){
         List<News> listaNews = newsService.listall();
         return new ResponseEntity<>(listaNews, HttpStatus.OK);
+
+    }
+
+
+    @RequestMapping(value = {"/home/report"},method = RequestMethod.GET)
+    public ModelAndView reportVisiteAnalisi(){
+        ModelAndView modelAndView = new ModelAndView();
+        List<Analisi> analisi = analisiService.findbyuserID(userr.getId());
+        List<Prenotazioni> prenotazioni = prenotazioniService.findByNome(userr.getNome());
+        modelAndView.addObject("analisi",analisi);
+        modelAndView.addObject("user",userr);
+        modelAndView.setViewName("home/report");
+        return modelAndView;
 
     }
 }

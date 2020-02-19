@@ -1,5 +1,6 @@
 package com.example.java.service;
 
+import com.example.java.model.DBFile;
 import com.example.java.model.Prenotazioni;
 import com.example.java.model.User;
 import org.springframework.data.jpa.repository.Query;
@@ -36,5 +37,8 @@ public interface PrenotazioniService {
     List<Prenotazioni> findLike(String email,Integer sede_id);
 
     Integer updateAnalisiParamentro(Integer id); //mette analisi a 1
+
+    List<Prenotazioni> report(Integer user_id); //report
+
 
 }

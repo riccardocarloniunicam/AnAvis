@@ -2,6 +2,7 @@ package com.example.java.controller.Sede;
 
 
 import com.example.java.model.*;
+import com.example.java.repository.DBFileRepository;
 import com.example.java.service.NewsService;
 import com.example.java.service.PrenotazioniService;
 import com.example.java.service.UserService;
@@ -30,6 +31,7 @@ public class SedeController {
     @Autowired
     private PrenotazioniService prenotazioniService;
     @Autowired UserService userService;
+
 
 
     @Qualifier("utente_sede")

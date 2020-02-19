@@ -17,10 +17,10 @@ public class DBFile {
 
     private String fileType;
 
-    @Column(name = "user_id")
+    @Column(name = "utente")
     private Integer user_id;
 
-    @Column(name = "prenotazione_id")
+    @Column(name = "pid")
     private Integer prenotazione_id;
     @Lob
     private byte[] data;

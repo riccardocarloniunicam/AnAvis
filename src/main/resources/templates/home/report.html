@@ -69,76 +69,31 @@
                 <div class="col-md-7 ">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">  <h4 >La tua Prenotazione</h4></div>
+                        <div class="panel-heading">  <h4 >Le tue Visite ed Analisi</h4></div>
                         <div class="panel-body">
 
                             <div class="box box-info">
 
 
                                 <div class="col-sm-6">
+                                    <h4 style="color:#00b1b1;" th:utext="${user.nome}+' '+${user.cognome}"> </h4>
 
 
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr style="margin:5px 0 5px 0;">
-
-
-                                <div class="col-md-6">
-                                    <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+                                <div  th:each="analisi : *{analisi}" class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Visita n <span th:text="${analisi.prenotazione_id}"></span></h5>
+                                        <p class="card-text">La visita si è svolta presso la sede di Ancona</p>
+                                    <form method="get" th:action="${analisi.download_path}">
+                                        <button type="submit" class="btn btn-primary">Download</button>
+                                    </form>
                                     </div>
+                                    <hr>
                                 </div>
 
 
-                                <div th:style="${prenotazione == 'null' ? 'display:none' : 'display:block'}" id="1">
-                                <div th:text ="${prenotazione == 'null'} ? (${prenotazione != ''} ? ${''} : 'empty string message') : '' ">
-
-                                </div>
 
 
-                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
-                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getNome()+' '+prenotazione.getCognome()} : 'empty string message') : '' "></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-
-
-                                <div class="col-sm-5 col-xs-6 tital " >Data e ora:</div><div class="col-sm-7 col-xs-6 ">
-                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${prenotazione.getData()+' '+prenotazione.getOrario()} : 'empty string message') : '' "></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-                                <div class="col-sm-5 col-xs-6 tital " >Nome:</div><div class="col-sm-7 col-xs-6 ">
-                                <span th:text ="${prenotazione != 'null'} ? (${prenotazione != ''} ? ${sede.getRegione()+' '+sede.getCitta() +' '+sede.getCitta()} : 'empty string message') : '' "></span></div>
-                                <div class="clearfix"></div>
-                                <div class="bot-border"></div>
-
-
-
-                                <form  th:action="@{/home/cancella-prenotazione/}" method="get">
-                                    <button class="button" th:type="submit">Elimina prenotazione</button>
-                                </form>
-                                </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div></div></div></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <!-- /.box-body -->
+                                <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
 

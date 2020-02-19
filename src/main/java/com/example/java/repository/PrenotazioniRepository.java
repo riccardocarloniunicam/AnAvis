@@ -1,5 +1,6 @@
 package com.example.java.repository;
 
+import com.example.java.model.DBFile;
 import com.example.java.model.Prenotazioni;
 import com.example.java.model.Sede;
 import com.example.java.model.User;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.nio.file.Files;
 import java.util.List;
 
 @Transactional
@@ -79,6 +81,10 @@ public interface PrenotazioniRepository extends JpaRepository<Prenotazioni, Long
    //Funzione di ricerca per nome
    @Query(value = "SELECT * FROM prenotazioni WHERE nome LIKE %?1%  and stato ='ESEGUITA' and sede_id=?2 order by analisi,cognome,data",nativeQuery = true)
    List<Prenotazioni> findByNameLike(String name,Integer sede_id);
+
+   @Query(value = "select * from prenotazioni inner join files on (prenotazioni.id = files.pid) and files.utente=?1",nativeQuery = true)
+   List<Prenotazioni> report(Integer user_id);
+
 
 
 }

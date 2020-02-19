@@ -1,5 +1,6 @@
 package com.example.java.service;
 
+import com.example.java.model.DBFile;
 import com.example.java.model.Prenotazioni;
 import com.example.java.model.User;
 import com.example.java.repository.PrenotazioniRepository;
@@ -120,4 +121,11 @@ public class PrenotazioniServiceImpl implements PrenotazioniService {
     public Integer updateAnalisiParamentro(Integer id) {
         return prenotazioniRepository.updateParametroAnalisi(id);
     }
+
+    @Override
+    public List<Prenotazioni> report(Integer user_id) {
+        return prenotazioniRepository.report(user_id);
+    }
+
+
 }
