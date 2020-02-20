@@ -60,9 +60,10 @@ private UserService userService;
             moduloService.saveModulo(modulo,userr.getId());
             model.addObject("modulo", new Modulo());
             redirectAttributes.addFlashAttribute("msg", "Modulo inviato con successo!");
+            return "redirect:/home/home";
 
         }
-        return "redirect:/home/home";
+        return "/home/nuovo-modulo";
 
     }
 }

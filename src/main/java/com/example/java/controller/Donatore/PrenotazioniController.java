@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class AppuntamentiController {
+public class PrenotazioniController {
 
     @Autowired
     private PrenotazioniService prenotazioniService;

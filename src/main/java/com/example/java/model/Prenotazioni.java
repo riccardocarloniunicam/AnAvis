@@ -38,6 +38,7 @@ public class Prenotazioni {
     @Column(name = "analisi")
     private int analisi;
 
+
     public int getAnalisi() {
         return analisi;
     }

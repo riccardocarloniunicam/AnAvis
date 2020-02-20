@@ -25,8 +25,9 @@ function uploadSingleFile(file,user_id,prenotazione_id) {
         var response = JSON.parse(xhr.responseText);
         if(xhr.status == 200) {
             singleFileUploadError.style.display = "none";
-            singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
+            singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p>";
             singleFileUploadSuccess.style.display = "block";
+            window.location.href = '/return';
         } else {
             singleFileUploadSuccess.style.display = "none";
             singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";

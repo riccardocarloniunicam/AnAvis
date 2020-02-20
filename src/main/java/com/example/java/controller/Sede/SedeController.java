@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -39,7 +41,12 @@ public class SedeController {
     private UtenteSedi utenteSedi;
 
 
+    @RequestMapping(value = {"return"},method = RequestMethod.GET)
+    public String ritorno(Model model,RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("file_caricato","File Caricato con successo!");
+        return "redirect:/sede/prenotazioni-eseguite";
 
+    }
     @RequestMapping(value= {"/sede/home"}, method= RequestMethod.GET)
     public ModelAndView sede() {
         ModelAndView model = new ModelAndView();
