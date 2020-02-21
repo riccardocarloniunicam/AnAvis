@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -27,9 +28,9 @@ private MessaggiService messaggiService;
 @Autowired
 private NewsService newsService;
 @Autowired
-    private PrenotazioniService prenotazioniService;
+    private SedeService sedeService;
 @Autowired
-private AnalisiService analisiService;
+private OrarioService orarioService;
 
 
     @RequestMapping(value = {"/getmessaggi"},method = RequestMethod.GET)
@@ -48,6 +49,25 @@ private AnalisiService analisiService;
         return new ResponseEntity<>(listaNews, HttpStatus.OK);
 
     }
+
+    @RequestMapping(value = {"/getsede"},method = RequestMethod.GET)
+    public ResponseEntity<Object> getSede(){
+        List<Sede> listaSede = sedeService.listAll();
+        return new ResponseEntity<>(listaSede, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = {"/getorario"},method = RequestMethod.GET)
+    public ResponseEntity<Object> getOrario(@RequestParam("sede_id")String sede_id,@RequestParam("data")String data){
+        System.out.println(sede_id);
+        System.out.println(data);
+    List<Orario> orarios = orarioService.getORario(sede_id,data);
+        return new ResponseEntity<>(orarios, HttpStatus.OK);
+
+    }
+
+
+
 
 
 
