@@ -39,7 +39,8 @@ public class FileController {
 
 
     @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("user_id") Integer user_id,@RequestParam("prenotazione_id")Integer prenotazione_id) {
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("user_id") Integer user_id,@RequestParam("prenotazione_id")Integer prenotazione_id,
+                                         @RequestParam("nota")String nota) {
         //metti la prenotazione eseguita
         //INSERT INTO ANALISI user_id file download, prenotazione id;
 
@@ -55,6 +56,7 @@ public class FileController {
         analisi.setUser_id(user_id);
         analisi.setPrenotazione_id(prenotazione_id);
         analisi.setDownload_path(fileDownloadUri);
+        analisi.setNota(nota);
         analisiService.saveAnalisi(analisi);
 
 

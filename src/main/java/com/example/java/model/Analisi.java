@@ -22,6 +22,17 @@ public class Analisi {
     @Column(name = "download_path")
     private String download_path;
 
+    @Column(name = "nota")
+    private String nota;
+
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
+
     public int getId() {
         return id;
     }

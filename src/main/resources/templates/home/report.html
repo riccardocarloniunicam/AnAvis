@@ -79,16 +79,25 @@
                                     <h4 style="color:#00b1b1;" th:utext="${user.nome}+' '+${user.cognome}"> </h4>
 
 
-                                <div  th:each="analisi : *{analisi}" class="card" style="width: 18rem;">
+                                <div  th:each="analisi : *{analisi}" class="card" style="width: 50rem;">
                                     <div class="card-body">
                                         <h5 class="card-title">Visita n <span th:text="${analisi.prenotazione_id}"></span></h5>
                                         <p class="card-text">La visita si è svolta presso la sede di Ancona</p>
+                                        <div class="contatiner">
+                                            <p>Nota:<span th:text="${analisi.nota}"> </span></p>
+                                        </div>
+                                        <p style="font-size: 10px">Per scaricare i risultati delle analisi clicca qui sotto.</p>
                                     <form method="get" th:action="${analisi.download_path}">
                                         <button type="submit" class="btn btn-primary">Download</button>
                                     </form>
                                     </div>
+
                                 </div>
-                                    <hr>
+                               
+
+
+
+
 
 
 

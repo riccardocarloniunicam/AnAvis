@@ -10,11 +10,12 @@ var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput')
 var multipleFileUploadError = document.querySelector('#multipleFileUploadError');
 var multipleFileUploadSuccess = document.querySelector('#multipleFileUploadSuccess');
 
-function uploadSingleFile(file,user_id,prenotazione_id) {
+function uploadSingleFile(file,user_id,prenotazione_id,nota) {
     var formData = new FormData();
     formData.append("file", file);
     formData.append("user_id", user_id);
     formData.append("prenotazione_id", prenotazione_id);
+    formData.append("nota", nota);
     console.log(user_id);
 
     var xhr = new XMLHttpRequest();
@@ -39,13 +40,14 @@ function uploadSingleFile(file,user_id,prenotazione_id) {
 
 singleUploadForm.addEventListener('submit', function(event){
     var files = singleFileUploadInput.files;
+    var nota = document.getElementById("nota").value;
     var user_id = document.getElementById("user_id").value;
     var prenotazione_id = document.getElementById("prenotazione_id").value;
     if(files.length === 0) {
         singleFileUploadError.innerHTML = "Please select a file";
         singleFileUploadError.style.display = "block";
     }
-    uploadSingleFile(files[0],user_id,prenotazione_id);
+    uploadSingleFile(files[0],user_id,prenotazione_id,nota);
     event.preventDefault();
 }, true);
 

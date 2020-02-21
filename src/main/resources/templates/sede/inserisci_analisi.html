@@ -160,6 +160,7 @@ body class="">
                                         <div class="single-upload">
                                             <h3>Upload Single File</h3>
                                             <form id="singleUploadForm" name="singleUploadForm">
+                                                <textarea placeholder="Inserisci nota per il paziente" th:id="nota" th:name="nota" class="form-control" rows="5"></textarea>
                                                 <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
                                                 <input type="hidden" id="user_id" name="user_id" th:value="${user_id}" required>
                                                 <input type="hidden" id="prenotazione_id" name="prenotazione_id" th:value="${prenotazione_id}" required>

@@ -13,6 +13,6 @@ public interface AnalisiRepository extends JpaRepository<Analisi,Long> {
 
 
 
-    @Query(value = "SELECT  * FROM analisi where user_id = ?1",nativeQuery = true)
+    @Query(value = "SELECT  * FROM analisi where user_id = ?1 order by id desc",nativeQuery = true)
     List<Analisi> findAanalisiByID(Integer id);
 }
