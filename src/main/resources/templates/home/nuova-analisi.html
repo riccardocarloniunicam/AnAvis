@@ -98,7 +98,7 @@
 
 
 
-            function uploadSingleFile(sede_id,data) {
+            function uploadPrenotazione(sede_id,data) {
                 let dropdown = $('#orario');
                 dropdown.empty();
                 dropdown.prop('selectedIndex', 0);
@@ -121,8 +121,7 @@
                 $("#orarioo").css('display','block');
                 var sede_id =$('#sede').val()
                 var data = $("#date1").val()
-                console.log(data)
-                uploadSingleFile(sede_id,data);
+                uploadPrenotazione(sede_id,data);
 
             };
 
