@@ -281,6 +281,10 @@
         <!-- Tabs Titles -->
 
         <!-- Icon -->
+
+            <div class="alert alert-success" role="alert" th:if="${signup}" th:utext="${signup}">
+            </div>
+
         <div class="alert alert-danger" role="alert" th:if="${param.error}">
             The email or password is incorrect!
         </div>

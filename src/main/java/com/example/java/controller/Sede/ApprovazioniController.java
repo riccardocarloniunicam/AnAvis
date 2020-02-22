@@ -74,7 +74,7 @@ public class ApprovazioniController {
     @RequestMapping(value = "/disapprovazione",method = RequestMethod.POST)
     public String respingiModulo(@Valid User user, Model model, RedirectAttributes redirectAttributes){
         moduloService.deleteById(user.getId());
-        userService.downGradeParamModulo(user.getId()); // NON FUNZIONA PORCODIDO
+        userService.downGradeParamModulo(user.getId());
         redirectAttributes.addFlashAttribute("delete", "Modulo Respinto");
         return "redirect:/sede/approvazioni/";
 

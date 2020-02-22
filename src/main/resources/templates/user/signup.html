@@ -41,6 +41,10 @@
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
                         <input type="text" th:field="*{nome}" class="form-control" id="nome"
                                placeholder="Nome" required autofocus>
+                        <div class="form-control-feedback">
+                         <span class="text-danger align-middle" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
+                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,7 +196,7 @@
 
                             dropdown.empty();
 
-                            dropdown.append('<option selected="true" disabled>Choose Stato/Provincia</option>');
+
                             dropdown.prop('selectedIndex', 0);
 
                             const url = 'https://gist.githubusercontent.com/stockmind/8bcbbf9ac41bc196401b96084ec8c5d3/raw/2edda5cd32eb2b99d3d9b45413bc8b1135564260/province-italia.json';
