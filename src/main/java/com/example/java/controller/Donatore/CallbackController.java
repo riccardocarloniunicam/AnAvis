@@ -57,14 +57,6 @@ private OrarioService orarioService;
 
     }
 
-    @RequestMapping(value = {"/getorario"},method = RequestMethod.GET)
-    public ResponseEntity<Object> getOrario(@RequestParam("sede_id")String sede_id,@RequestParam("data")String data){
-        System.out.println(sede_id);
-        System.out.println(data);
-    List<Orario> orarios = orarioService.getORario(sede_id,data);
-        return new ResponseEntity<>(orarios, HttpStatus.OK);
-
-    }
 
 
 

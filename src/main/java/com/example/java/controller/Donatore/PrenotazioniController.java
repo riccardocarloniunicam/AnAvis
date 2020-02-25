@@ -4,9 +4,12 @@ import com.example.java.model.Orario;
 import com.example.java.model.Prenotazioni;
 import com.example.java.model.Sede;
 import com.example.java.model.User;
+import com.example.java.service.OrarioService;
 import com.example.java.service.PrenotazioniService;
 import com.example.java.service.SedeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +33,8 @@ public class PrenotazioniController {
     private SedeService sedeService;
     @Autowired
     private User userr;
+    @Autowired
+    private OrarioService orarioService;
 
 
 
@@ -97,5 +102,15 @@ public class PrenotazioniController {
         }
 
     }
+
+    @RequestMapping(value = {"/getorario"},method = RequestMethod.GET)
+    public ResponseEntity<Object> getOrario(@RequestParam("sede_id")String sede_id, @RequestParam("data")String data){
+        System.out.println(sede_id);
+        System.out.println(data);
+        List<Orario> orarios = orarioService.getORario(sede_id,data);
+        return new ResponseEntity<>(orarios, HttpStatus.OK);
+
+    }
+
 
 }
